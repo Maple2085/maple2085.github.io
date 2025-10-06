@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
+/* 20251006A */
 <head>
-    <!-- 在 <head> 里加一行 Font-Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
         integrity="sha512-...sha384-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -10,14 +9,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Maple2085 的个人主页</title>
 
-    <!-- 字体 -->
     <link rel="stylesheet" href="https://cdn.imsyy.top/gh/imsyy/file/font/HarmonyOS_Sans/regular.min.css" />
 
     <style>
+        body {
+            font-family: "HarmonyOS Sans",
+                -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                "Helvetica Neue", Arial, sans-serif;
+        }
+
         :root {
             --glass: 255, 255, 255;
             /* 告诉浏览器“玻璃”就是纯白 */
-            --bg: url("/img/background.JPG") center/cover no-repeat;
+            --bg: url("./img/background.jpg") center/cover no-repeat;
         }
 
         * {
@@ -103,33 +107,63 @@
             font-size: 12px;
             opacity: .6;
         }
+
+        /*===== 卡片容器 =====*/
+        .card-deck {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 24px;
+            width: 100%;
+            max-width: 1200px;
+            padding: 0 20px;
+            margin: 0 auto;
+            overflow-x: visible;
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        .card-deck::-webkit-scrollbar {
+            /* Chrome/Edge/Safari */
+            display: none;
+        }
+
+        /*===== 单张卡片 =====*/
+        .card-deck .card {
+            flex: 0 0 auto;
+            width: 420px;
+            margin: 0;
+        }
+
+        /*===== 手机端竖排 =====*/
+        @media (max-width: 600px) {
+            .card-deck {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card-deck .card {
+                width: 90%;
+                max-width: 420px;
+            }
+        }
     </style>
 </head>
 
 <body>
-    <div class="card">
-        <div class="avatar"></div>
-        <h1>Maple2085</h1>
-        <p class="bio">技术小白 · 指挥AI写代码 · 记录成长</p>
-
-        <!-- 替换原来的 nav.links -->
-        <nav class="links">
-            <a href="https://github.com/Maple2085" target="_blank" aria-label="GitHub">
-                <i class="fa-brands fa-github"></i>
-            </a>
-
-            <a href="https://b23.tv/vhu1ny9" target="_blank" aria-label="哔哩哔哩">
-                <i class="fa-brands fa-bilibili"></i>
-            </a>
-
-            <a href="https://twitter.com/NLQFgzs" target="_blank" aria-label="X(Twitter)">
-                <i class="fa-brands fa-x-twitter"></i>
-            </a>
-        </nav>
-
-        <footer style="color:#fff">© 2025 Maple2085 | 欢迎来玩~</footer>
+    <div class="card-deck">
+        <div class="card">
+            <div class="avatar"></div>
+            <h1>Maple2085</h1>
+            <p class="bio">技术小白 · 指挥AI写代码 · 记录成长</p>
+            <nav class="links"><a href="https://github.com/Maple2085" target="_blank" rel="noopener noreferrer"
+                    aria-label="GitHub"><i class="fa-brands fa-github"></i></a><a href="https://b23.tv/vhu1ny9"
+                    target="_blank" rel="noopener noreferrer" aria-label="哔哩哔哩"><i
+                        class="fa-brands fa-bilibili"></i></a><a href="https://twitter.com/NLQFgzs" target="_blank"
+                    rel="noopener noreferrer" aria-label="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a></nav>
+            <footer style="color:#fff">© 2025 Maple2085 | 欢迎来玩~</footer>
+        </div>
     </div>
 </body>
-
 
 </html>
