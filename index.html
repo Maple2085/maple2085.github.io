@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<!-- 20251006A-fix -->
+<!-- 20251018A -->
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
         integrity="sha512-...sha384-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -21,7 +21,7 @@
         :root {
             --glass: 255, 255, 255;
             /* 告诉浏览器“玻璃”就是纯白 */
-            --bg: url("./img/background.jpg") center/cover no-repeat;
+            --bg: url("./img/background.jpg") center/cover no-repeat fixed;
         }
 
         * {
@@ -31,7 +31,7 @@
         }
 
         body {
-            height: 100vh;
+            min-height: 100vh;
             background: var(--bg);
             display: flex;
             align-items: center;
@@ -155,13 +155,13 @@
         <div class="card">
             <div class="avatar"></div>
             <h1>Maple2085</h1>
-            <p class="bio">技术小白 · 指挥AI写代码 · 记录成长</p>
+            <p class="bio">技术小白 · AI写代码</p>
             <nav class="links"><a href="https://github.com/Maple2085" target="_blank" rel="noopener noreferrer"
                     aria-label="GitHub"><i class="fa-brands fa-github"></i></a><a href="https://b23.tv/vhu1ny9"
                     target="_blank" rel="noopener noreferrer" aria-label="哔哩哔哩"><i
                         class="fa-brands fa-bilibili"></i></a><a href="https://twitter.com/NLQFgzs" target="_blank"
                     rel="noopener noreferrer" aria-label="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a></nav>
-            <footer style="color:#fff">© 2025 Maple2085 | 欢迎来玩~</footer>
+            <footer style="color:#fff">© 2025 Maple2085 | 欢迎交流</footer>
         </div>
     </div>
 </body>
