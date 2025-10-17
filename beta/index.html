@@ -1,240 +1,175 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<!-- 20251006B -->
-
+<!DOCTYPE html><html lang="zh-CN">
+<!-- 20251018B 响应式版本 -->
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-        integrity="sha512-...sha384-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+        integrity="sha512-...sha384-..." crossorigin="anonymous" referrerpolicy="no-referrer" /><meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Maple2085 的个人主页</title>
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Maple2085 的个人主页</title>
+<link rel="stylesheet" href="https://cdn.imsyy.top/gh/imsyy/file/font/HarmonyOS_Sans/regular.min.css" />
 
-    <link rel="stylesheet" href="https://cdn.imsyy.top/gh/imsyy/file/font/HarmonyOS_Sans/regular.min.css" />
+<style>
+    body {
+        font-family: "HarmonyOS Sans",
+            -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+            "Helvetica Neue", Arial, sans-serif;
+    }
 
-    <style>
-        body {
-            font-family: "HarmonyOS Sans",
-                -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-                "Helvetica Neue", Arial, sans-serif;
-        }
+    :root {
+        --glass: 255, 255, 255;
+        --bg: url("./img/background.jpg") center/cover no-repeat fixed;
+    }
 
-        :root {
-            --glass: 255, 255, 255;
-            /* 告诉浏览器“玻璃”就是纯白 */
-            --bg: url("/img/background.jpg") center/cover no-repeat;
-        }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    body {
+        min-height: 100vh;
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "HarmonyOS Sans", sans-serif;
+    }
 
-        body {
-            height: 100vh;
-            background: var(--bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: "HarmonyOS Sans", sans-serif;
-        }
+    /*===== 卡片容器（响应式Grid）=====*/
+    .card-deck {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+        width: 100%;
+        max-width: 1600px; /* 最多4列 */
+        padding: 0 20px;
+        margin: 0 auto;
+        overflow-x: visible;
+    }
 
-        .card {
-            width: 90%;
-            max-width: 420px;
-            padding: 50px 40px;
-            border-radius: 24px;
-            background: rgba(var(--glass), 0.25);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, .15);
-            border: 1px solid rgba(var(--glass), 0.4);
-            text-align: center;
-            color: #333;
-        }
+    /*===== 单张卡片 =====*/
+    .card-deck .card {
+        width: 100%; /* 宽度由Grid自动控制 */
+        max-width: 420px;
+        padding: 50px 40px;
+        border-radius: 24px;
+        background: rgba(var(--glass), 0.25);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, .15);
+        border: 1px solid rgba(var(--glass), 0.4);
+        text-align: center;
+        color: #333;
+        margin: 0 auto;
+    }
 
-        .avatar {
-            width: 90px;
-            height: 90px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            background: #fff url("/img/logo.jpg") center/cover no-repeat;
-            /* 下面两行保证没有文字 */
-            font-size: 0;
-            color: transparent;
-        }
+    .avatar {
+        width: 90px;
+        height: 90px;
+        margin: 0 auto 20px;
+        border-radius: 50%;
+        background: #fff url("./img/logo.jpg") center/cover no-repeat;
+        font-size: 0;
+        color: transparent;
+    }
 
-        h1 {
-            font-size: 26px;
-            margin-bottom: 8px;
-        }
+    h1 {
+        font-size: 26px;
+        margin-bottom: 8px;
+    }
 
-        .bio {
-            font-size: 15px;
-            margin-bottom: 30px;
-            opacity: .85;
-        }
+    .bio {
+        font-size: 15px;
+        margin-bottom: 30px;
+        opacity: .85;
+    }
 
-        .links {
-            display: flex;
-            gap: 18px;
-            justify-content: center;
-        }
+    .links {
+        display: flex;
+        gap: 18px;
+        justify-content: center;
+    }
 
-        /* 默认黑色图标 */
-        .links a {
-            flex: 1;
-            padding: 10px 0;
-            border-radius: 12px;
-            background: rgba(var(--glass), 0.5);
-            color: #000;
-            /* 默认黑色 */
-            font-size: 22px;
-            transition: .3s;
-        }
+    .links a {
+        flex: 1;
+        padding: 10px 0;
+        border-radius: 12px;
+        background: rgba(var(--glass), 0.5);
+        color: #000;
+        font-size: 22px;
+        transition: .3s;
+    }
 
-        /* 悬停时变枫叶红 */
-        .links a:hover {
-            background: rgba(var(--glass), 0.8);
-            color: #ff7e7e;
-            /* 枫叶红 */
-            transform: translateY(-2px);
-            /* 微抬 */
-        }
+    .links a:hover {
+        background: rgba(var(--glass), 0.8);
+        color: #ff7e7e;
+        transform: translateY(-2px);
+    }
 
-        footer {
-            margin-top: 30px;
-            font-size: 12px;
-            opacity: .6;
-        }
+    footer {
+        margin-top: 30px;
+        font-size: 12px;
+        opacity: .6;
+        color: #fff;
+    }
 
-        /*===== 卡片容器 =====*/
+    /*===== 手机端竖排 =====*/
+    @media (max-width: 600px) {
         .card-deck {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 24px;
-            width: 100%;
-            max-width: 1200px;
-            padding: 0 20px;
-            margin: 0 auto;
-            overflow-x: visible;
-            scrollbar-width: none;
-            /* Firefox */
+            grid-template-columns: 1fr;
         }
+    }
+</style>
 
-        .card-deck::-webkit-scrollbar {
-            /* Chrome/Edge/Safari */
-            display: none;
-        }
-
-        /*===== 单张卡片 =====*/
-        .card-deck .card {
-            flex: 0 0 auto;
-            width: 420px;
-            margin: 0;
-        }
-
-        /*===== 手机端竖排 =====*/
-        @media (max-width: 600px) {
-            .card-deck {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .card-deck .card {
-                width: 90%;
-                max-width: 420px;
-            }
-        }
-
-        /*===== 实时时间卡片 =====*/
-        #time-card {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            /* 垂直居中 */
-            align-items: center;
-            /* 水平居中 */
-            padding: 50px 40px;
-            /* 与介绍卡同 padding */
-            gap: 16px;
-            /* 日期与时间间距 */
-            text-align: center;
-        }
-
-        #time-card h1 {
-            font-size: 28px;
-            color: #333;
-            margin: 0;
-        }
-
-        #time-card p {
-            font-size: 56px;
-            font-weight: bold;
-            color: #ff7e7e;
-            letter-spacing: 1px;
-            margin: 0;
-            animation: glow 2s ease-in-out infinite;
-        }
-
-        /* 分割线取消，因为我们用 gap 就够了 */
-        #time-card::before {
-            display: none;
-        }
-
-        /* 手机端稍微缩小 */
-        @media (max-width: 600px) {
-            #time-card h1 {
-                font-size: 22px;
-            }
-
-            #time-card p {
-                font-size: 46px;
-            }
-        }
-    </style>
-</head>
-
-<body>
+</head><body>
     <div class="card-deck">
         <div class="card">
             <div class="avatar"></div>
             <h1>Maple2085</h1>
-            <p class="bio">技术小白 · 指挥AI写代码 · 记录成长</p>
-            <nav class="links"><a href="https://github.com/Maple2085" target="_blank" rel="noopener noreferrer"
-                    aria-label="GitHub"><i class="fa-brands fa-github"></i></a><a href="https://b23.tv/vhu1ny9"
-                    target="_blank" rel="noopener noreferrer" aria-label="哔哩哔哩"><i
-                        class="fa-brands fa-bilibili"></i></a><a href="https://twitter.com/NLQFgzs" target="_blank"
-                    rel="noopener noreferrer" aria-label="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a></nav>
-            <footer style="color:#fff">© 2025 Maple2085 | 欢迎来玩~</footer>
-        </div>
-
-        <!-- 实时时间卡片 -->
-        <div class="card" id="time-card">
-            <h1 id="date"></h1>
-            <p id="time"></p>
-        </div>
-
-        <script>
-            function updateClock() {
-                const now = new Date();
-                const y = now.getFullYear();
-                const m = String(now.getMonth() + 1).padStart(2, '0');
-                const d = String(now.getDate()).padStart(2, '0');
-                const h = String(now.getHours()).padStart(2, '0');
-                const min = String(now.getMinutes()).padStart(2, '0');
-                const s = String(now.getSeconds()).padStart(2, '0');
-
-                document.getElementById('date').textContent = `${y}年${m}月${d}日`;
-                document.getElementById('time').textContent = `${h}:${min}:${s}`;
-            }
-
-            updateClock();
-            setInterval(updateClock, 1000);
-        </script>
+            <p class="bio">技术小白 · AI写代码</p>
+            <nav class="links">
+                <a href="https://github.com/Maple2085" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="https://b23.tv/vhu1ny9" target="_blank" rel="noopener noreferrer" aria-label="哔哩哔哩"><i class="fa-brands fa-bilibili"></i></a>
+                <a href="https://twitter.com/NLQFgzs" target="_blank" rel="noopener noreferrer" aria-label="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+            </nav>
+            <footer>© 2025 Maple2085 | 欢迎交流</footer>
+        </div><!-- 示例新增卡片 -->
+    <div class="card">
+        <div class="avatar"></div>
+        <h1>Maple同学</h1>
+        <p class="bio">喜欢研究网页与视觉交互</p>
+        <nav class="links">
+            <a href="#"><i class="fa-solid fa-link"></i></a>
+            <a href="#"><i class="fa-brands fa-discord"></i></a>
+            <a href="#"><i class="fa-solid fa-envelope"></i></a>
+        </nav>
+        <footer>个性卡片示例</footer>
     </div>
-</body>
 
+    <div class="card">
+        <div class="avatar"></div>
+        <h1>AI研究角</h1>
+        <p class="bio">测试多卡片横排布局效果</p>
+        <nav class="links">
+            <a href="#"><i class="fa-solid fa-globe"></i></a>
+            <a href="#"><i class="fa-solid fa-brain"></i></a>
+            <a href="#"><i class="fa-solid fa-bolt"></i></a>
+        </nav>
+        <footer>第三张卡片</footer>
+    </div>
+
+    <div class="card">
+        <div class="avatar"></div>
+        <h1>未来计划</h1>
+        <p class="bio">保持更新，记录灵感</p>
+        <nav class="links">
+            <a href="#"><i class="fa-solid fa-book"></i></a>
+            <a href="#"><i class="fa-solid fa-pen-nib"></i></a>
+            <a href="#"><i class="fa-solid fa-star"></i></a>
+        </nav>
+        <footer>第四张卡片</footer>
+    </div>
+</div>
+
+</body>
 </html>
