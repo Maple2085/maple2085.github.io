@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<!-- 20251006A-fix -->
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-...sha384-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maple2085 的个人主页</title>
+
+    <link rel="stylesheet" href="https://cdn.imsyy.top/gh/imsyy/file/font/HarmonyOS_Sans/regular.min.css" />
+
+    <style>
+        body {
+            font-family: "HarmonyOS Sans",
+                -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                "Helvetica Neue", Arial, sans-serif;
+        }
+
+        :root {
+            --glass: 255, 255, 255;
+            /* 告诉浏览器“玻璃”就是纯白 */
+            --bg: url("./img/background.jpg") center/cover no-repeat;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "HarmonyOS Sans", sans-serif;
+        }
+
+        .card {
+            width: 90%;
+            max-width: 420px;
+            padding: 50px 40px;
+            border-radius: 24px;
+            background: rgba(var(--glass), 0.25);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, .15);
+            border: 1px solid rgba(var(--glass), 0.4);
+            text-align: center;
+            color: #333;
+        }
+
+        .avatar {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: #fff url("./img/logo.jpg") center/cover no-repeat;
+            /* 下面两行保证没有文字 */
+            font-size: 0;
+            color: transparent;
+        }
+
+        h1 {
+            font-size: 26px;
+            margin-bottom: 8px;
+        }
+
+        .bio {
+            font-size: 15px;
+            margin-bottom: 30px;
+            opacity: .85;
+        }
+
+        .links {
+            display: flex;
+            gap: 18px;
+            justify-content: center;
+        }
+
+        /* 默认黑色图标 */
+        .links a {
+            flex: 1;
+            padding: 10px 0;
+            border-radius: 12px;
+            background: rgba(var(--glass), 0.5);
+            color: #000;
+            /* 默认黑色 */
+            font-size: 22px;
+            transition: .3s;
+        }
+
+        /* 悬停时变枫叶红 */
+        .links a:hover {
+            background: rgba(var(--glass), 0.8);
+            color: #ff7e7e;
+            /* 枫叶红 */
+            transform: translateY(-2px);
+            /* 微抬 */
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 12px;
+            opacity: .6;
+        }
+
+        /*===== 卡片容器 =====*/
+        .card-deck {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 24px;
+            width: 100%;
+            max-width: 1200px;
+            padding: 0 20px;
+            margin: 0 auto;
+            overflow-x: visible;
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        .card-deck::-webkit-scrollbar {
+            /* Chrome/Edge/Safari */
+            display: none;
+        }
+
+        /*===== 单张卡片 =====*/
+        .card-deck .card {
+            flex: 0 0 auto;
+            width: 420px;
+            margin: 0;
+        }
+
+        /*===== 手机端竖排 =====*/
+        @media (max-width: 600px) {
+            .card-deck {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card-deck .card {
+                width: 90%;
+                max-width: 420px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card-deck">
+        <div class="card">
+            <div class="avatar"></div>
+            <h1>Maple2085</h1>
+            <p class="bio">技术小白 · 指挥AI写代码 · 记录成长</p>
+            <nav class="links"><a href="https://github.com/Maple2085" target="_blank" rel="noopener noreferrer"
+                    aria-label="GitHub"><i class="fa-brands fa-github"></i></a><a href="https://b23.tv/vhu1ny9"
+                    target="_blank" rel="noopener noreferrer" aria-label="哔哩哔哩"><i
+                        class="fa-brands fa-bilibili"></i></a><a href="https://twitter.com/NLQFgzs" target="_blank"
+                    rel="noopener noreferrer" aria-label="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a></nav>
+            <footer style="color:#fff">© 2025 Maple2085 | 欢迎来玩~</footer>
+        </div>
+    </div>
+</body>
+
+</html>
