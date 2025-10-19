@@ -49,8 +49,10 @@
 
 ## 🔗 Find Me
 <a href="https://github.com/Maple2085" target="_blank"><img alt="GitHub" src="https://img.shields.io/badge/GitHub-Maple2085-181717?logo=github"></a>
+
 <a href="https://b23.tv/vhu1ny9" target="_blank"><img alt="Bilibili" src="https://img.shields.io/badge/Bilibili-Maple2085-00A1D6?logo=bilibili"></a>
-<a href="https://twitter.com/NLQFgzs" target="_blank"><img alt="X (Twitter)" src="https://img.shields.io/badge/X-@NLQFgzs-000000?logo=x&logoColor=white"></a>
+
+<a href="https://twitter.com/NLQFgzs" target="_blank"><img alt="X (Twitter)" src="https://img.shields.io/badge/-@NLQFgzs-000000?logo=x&logoColor=white"></a>
 
 ---
 
