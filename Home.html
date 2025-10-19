@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>🍁 Maple2085 · 文具说明书</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: "HarmonyOS Sans", "Segoe UI", sans-serif;
+      background: #fafafa;
+      color: #333;
+      line-height: 1.7;
+      padding: 40px;
+      max-width: 900px;
+      margin: auto;
+    }
+    h1, h2, h3 { color: #ff7e7e; }
+    pre {
+      background: #282c34; color: #eee; padding: 10px;
+      border-radius: 10px; overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="content">🍁 正在加载 Maple2085 的文具说明书...</div>
+
+  <script>
+    async function loadMarkdown() {
+      const res = await fetch('https://raw.githubusercontent.com/Maple2085/Maple2085.github.io/main/Home.md');
+      const md = await res.text();
+      const html = md
+        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+        .replace(/\*\*(.*?)\*\*/gim, '<b>$1</b>')
+        .replace(/\*(.*?)\*/gim, '<i>$1</i>')
+        .replace(/\[(.*?)\]\((.*?)\)/gim, '<a href="$2" target="_blank">$1</a>')
+        .replace(/\n$/gim, '<br />');
+      document.getElementById('content').innerHTML = html;
+    }
+    loadMarkdown();
+  </script>
+</body>
+</html>
