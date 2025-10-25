@@ -21,9 +21,10 @@
       padding: 20px;
     }
 
+    /* 卡片容器，加载提示和Markdown内容共用 */
     .card {
       width: 90%;
-      max-width: 420px;
+      max-width: 420px; /* 和 index 保持一致 */
       padding: 50px 40px;
       border-radius: 24px;
       background: rgba(255,255,255,0.25);
@@ -33,12 +34,22 @@
       text-align: center;
       color: #333;
       line-height: 1.8;
-      opacity: 0;
-      transform: scale(0.8);
-      transition: transform 1s ease, opacity 1s ease;
       position: relative;
     }
 
+    /* 加载提示 */
+    #loader {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 18px;
+      opacity: 0;
+      transition: opacity 1s ease;
+      width: 100%;
+    }
+
+    /* Markdown内容 */
     #content {
       opacity: 0;
       transition: opacity 1s ease;
@@ -55,32 +66,33 @@
   </style>
 </head>
 <body>
-  <div class="card" id="card">
-    <div id="content">🍁 正在加载 Maple2085 的文具说明书...</div>
+  <div class="card">
+    <div id="loader">🍁 正在加载 Maple2085 的文具说明书...</div>
+    <div id="content"></div>
   </div>
 
+  <!-- Marked.js -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
-    const card = document.getElementById('card');
+    const loader = document.getElementById('loader');
     const content = document.getElementById('content');
 
-    // 页面进入，1秒渐显卡片
-    setTimeout(() => {
-      card.style.opacity = 1;
-      card.style.transform = "scale(1)";
-    }, 100);
+    // 1秒渐显加载提示
+    setTimeout(() => { loader.style.opacity = 1; }, 100);
 
-    // 2秒后开始加载 Markdown 并渐显
+    // 2秒后开始切换到 Markdown
     setTimeout(async () => {
+      // 渐隐加载提示
+      loader.style.opacity = 0;
+
+      // 拉取 Markdown 内容
       const res = await fetch('https://raw.githubusercontent.com/Maple2085/maple2085.github.io/main/Home.md');
       const md = await res.text();
       content.innerHTML = marked.parse(md);
 
-      // 延迟一点时间，让内容渐显
-      setTimeout(() => {
-        content.style.opacity = 1;
-      }, 200);
-    }, 2000);
+      // 渐显 Markdown 内容
+      setTimeout(() => { content.style.opacity = 1; }, 100);
+    }, 2000); // 总共3秒动画：1秒渐显 +1秒保持 +1秒切换
   </script>
 </body>
 </html>
