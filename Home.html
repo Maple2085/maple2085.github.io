@@ -3,42 +3,95 @@
 <head>
   <meta charset="UTF-8">
   <title>🍁 Maple2085 · 文具说明书</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet"
+        href="https://cdn.imsyy.top/gh/imsyy/file/font/HarmonyOS_Sans/regular.min.css" />
   <style>
     body {
-      font-family: "HarmonyOS Sans", "Segoe UI", sans-serif;
-      background: #fafafa;
+      font-family: "HarmonyOS Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url("./img/background.jpg") center/cover no-repeat fixed;
+      padding: 20px;
+    }
+
+    /* 加载提示卡片 */
+    .loader {
+      max-width: 90%;
+      min-width: 280px;
+      width: 400px;
+      padding: 30px 20px;
+      text-align: center;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      border: 1px solid rgba(255,255,255,0.4);
       color: #333;
-      line-height: 1.7;
-      padding: 40px;
-      max-width: 900px;
-      margin: auto;
+      font-size: 18px;
+      opacity: 0;
     }
-    h1, h2, h3 { color: #ff7e7e; }
-    pre {
-      background: #282c34; color: #eee; padding: 10px;
-      border-radius: 10px; overflow-x: auto;
+
+    /* Markdown 内容卡片 */
+    .card {
+      max-width: 90%;
+      min-width: 280px;
+      width: 100%;
+      padding: 40px 30px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      border: 1px solid rgba(255,255,255,0.4);
+      color: #333;
+      line-height: 1.8;
+      opacity: 0; /* 初始隐藏 */
+      transition: opacity 1s ease;
     }
+
+    h1, h2, h3 { color: #ff7e7e; margin-top: 1em; margin-bottom: 0.5em; }
+    p, li { margin-bottom: 12px; }
+    hr { border:0; border-top:1px solid rgba(0,0,0,0.1); margin: 20px 0; }
+    a { color:#ff7e7e; text-decoration:none; transition:0.3s; }
+    a:hover { color:#ff3b3b; text-decoration:underline; }
+    blockquote { border-left:4px solid #ff7e7e; padding-left:12px; margin:12px 0; color:#555; font-style:italic; }
+    pre { background:#282c34; color:#eee; padding:12px; border-radius:12px; overflow-x:auto; font-family:monospace; }
+
   </style>
 </head>
 <body>
-  <div id="content">🍁 正在加载 Maple2085 的文具说明书...</div>
+  <div class="loader" id="loader">🍁 正在加载 Maple2085 的文具说明书...</div>
+  <div class="card" id="content"></div>
 
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
-    async function loadMarkdown() {
-      const res = await fetch('https://raw.githubusercontent.com/Maple2085/Maple2085.github.io/main/Home.md');
+    const loader = document.getElementById('loader');
+    const content = document.getElementById('content');
+
+    // 动画阶段：1秒渐显
+    setTimeout(() => { loader.style.transition = 'opacity 1s'; loader.style.opacity = 1; }, 100);
+
+    // 1秒完整显示后
+    setTimeout(async () => {
+      // 渐变隐藏 loader
+      loader.style.opacity = 0;
+
+      // 加载 Markdown
+      const res = await fetch('https://raw.githubusercontent.com/Maple2085/maple2085.github.io/main/Home.md');
       const md = await res.text();
-      const html = md
-        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
-        .replace(/\*\*(.*?)\*\*/gim, '<b>$1</b>')
-        .replace(/\*(.*?)\*/gim, '<i>$1</i>')
-        .replace(/\[(.*?)\]\((.*?)\)/gim, '<a href="$2" target="_blank">$1</a>')
-        .replace(/\n$/gim, '<br />');
-      document.getElementById('content').innerHTML = html;
-    }
-    loadMarkdown();
+      content.innerHTML = marked.parse(md);
+
+      // 渐变显示 Markdown 内容
+      content.style.opacity = 0;
+      setTimeout(() => { content.style.opacity = 1; }, 100);
+
+    }, 2000); // 总共2秒后开始切换，形成3秒总效果
   </script>
 </body>
 </html>
