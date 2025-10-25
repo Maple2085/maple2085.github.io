@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>🍁 Maple2085 · 文具说明书</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -14,45 +14,46 @@
       font-family: "HarmonyOS Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       min-height: 100vh;
       margin: 0;
+      background: url("./img/background.jpg") center/cover no-repeat fixed;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: url("./img/background.jpg") center/cover no-repeat fixed;
       padding: 20px;
     }
 
-    /* 加载提示卡片 */
-    .loader {
-      max-width: 90%;
-      min-width: 280px;
-      width: 400px;
-      padding: 30px 20px;
-      text-align: center;
-      border-radius: 24px;
-      background: rgba(255,255,255,0.25);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-      border: 1px solid rgba(255,255,255,0.4);
-      color: #333;
-      font-size: 18px;
-      opacity: 0;
-    }
-
-    /* Markdown 内容卡片 */
+    /* 卡片容器，加载提示和Markdown内容共用 */
     .card {
-      max-width: 90%;
-      min-width: 280px;
-      width: 100%;
-      padding: 40px 30px;
+      width: 90%;
+      max-width: 420px; /* 和 index 保持一致 */
+      padding: 50px 40px;
       border-radius: 24px;
       background: rgba(255,255,255,0.25);
       backdrop-filter: blur(20px);
       box-shadow: 0 8px 32px rgba(0,0,0,0.15);
       border: 1px solid rgba(255,255,255,0.4);
+      text-align: center;
       color: #333;
       line-height: 1.8;
-      opacity: 0; /* 初始隐藏 */
+      position: relative;
+    }
+
+    /* 加载提示 */
+    #loader {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 18px;
+      opacity: 0;
       transition: opacity 1s ease;
+      width: 100%;
+    }
+
+    /* Markdown内容 */
+    #content {
+      opacity: 0;
+      transition: opacity 1s ease;
+      text-align: left;
     }
 
     h1, h2, h3 { color: #ff7e7e; margin-top: 1em; margin-bottom: 0.5em; }
@@ -62,36 +63,36 @@
     a:hover { color:#ff3b3b; text-decoration:underline; }
     blockquote { border-left:4px solid #ff7e7e; padding-left:12px; margin:12px 0; color:#555; font-style:italic; }
     pre { background:#282c34; color:#eee; padding:12px; border-radius:12px; overflow-x:auto; font-family:monospace; }
-
   </style>
 </head>
 <body>
-  <div class="loader" id="loader">🍁 正在加载 Maple2085 的文具说明书...</div>
-  <div class="card" id="content"></div>
+  <div class="card">
+    <div id="loader">🍁 正在加载 Maple2085 的文具说明书...</div>
+    <div id="content"></div>
+  </div>
 
+  <!-- Marked.js -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     const loader = document.getElementById('loader');
     const content = document.getElementById('content');
 
-    // 动画阶段：1秒渐显
-    setTimeout(() => { loader.style.transition = 'opacity 1s'; loader.style.opacity = 1; }, 100);
+    // 1秒渐显加载提示
+    setTimeout(() => { loader.style.opacity = 1; }, 100);
 
-    // 1秒完整显示后
+    // 2秒后开始切换到 Markdown
     setTimeout(async () => {
-      // 渐变隐藏 loader
+      // 渐隐加载提示
       loader.style.opacity = 0;
 
-      // 加载 Markdown
+      // 拉取 Markdown 内容
       const res = await fetch('https://raw.githubusercontent.com/Maple2085/maple2085.github.io/main/Home.md');
       const md = await res.text();
       content.innerHTML = marked.parse(md);
 
-      // 渐变显示 Markdown 内容
-      content.style.opacity = 0;
+      // 渐显 Markdown 内容
       setTimeout(() => { content.style.opacity = 1; }, 100);
-
-    }, 2000); // 总共2秒后开始切换，形成3秒总效果
+    }, 2000); // 总共3秒动画：1秒渐显 +1秒保持 +1秒切换
   </script>
 </body>
 </html>
