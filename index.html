@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8" />
   <title>Maple2085 的个人主页</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet"
-        href="https://cdn.imsyy.top/gh/imsyy/file/font/HarmonyOS_Sans/regular.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.imsyy.top/gh/imsyy/file/font/HarmonyOS_Sans/regular.min.css" />
   <style>
     body {
       font-family: "HarmonyOS Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -18,40 +17,70 @@
       align-items: center;
       justify-content: center;
     }
+
     .card {
       width: 90%;
       max-width: 420px;
       padding: 50px 40px;
       border-radius: 24px;
-      background: rgba(255,255,255,0.25);
+      background: rgba(255, 255, 255, 0.25);
       backdrop-filter: blur(20px);
       box-shadow: 0 8px 32px rgba(0, 0, 0, .15);
-      border: 1px solid rgba(255,255,255,0.4);
+      border: 1px solid rgba(255, 255, 255, 0.4);
       text-align: center;
       color: #333;
     }
+
     .avatar {
-      width: 90px; height: 90px; margin: 0 auto 20px;
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 20px;
       border-radius: 50%;
       background: #fff url("./img/logo.jpg") center/cover no-repeat;
     }
-    h1 { font-size: 26px; margin-bottom: 8px; }
-    .bio { font-size: 15px; margin-bottom: 30px; opacity: .85; }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 8px;
+    }
+
+    .bio {
+      font-size: 15px;
+      margin-bottom: 30px;
+      opacity: .85;
+    }
+
     .links {
-      display: flex; gap: 18px; justify-content: center;
+      display: flex;
+      gap: 18px;
+      justify-content: center;
     }
+
     .links a {
-      flex: 1; padding: 10px 0; border-radius: 12px;
-      background: rgba(255,255,255,0.5);
-      color: #000; font-size: 22px; transition: .3s;
+      flex: 1;
+      padding: 10px 0;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.5);
+      color: #000;
+      font-size: 22px;
+      transition: .3s;
     }
+
     .links a:hover {
-      background: rgba(255,255,255,0.8);
-      color: #ff7e7e; transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.8);
+      color: #ff7e7e;
+      transform: translateY(-2px);
     }
-    footer { margin-top: 30px; font-size: 12px; opacity: .6; color: #fff; }
+
+    footer {
+      margin-top: 30px;
+      font-size: 12px;
+      opacity: .6;
+      color: #fff;
+    }
   </style>
 </head>
+
 <body>
   <div class="card">
     <div class="avatar" id="avatar"></div>
@@ -64,21 +93,6 @@
     </nav>
     <footer>© 2025 Maple2085 | 欢迎交流</footer>
   </div>
-
-  <script>
-    const avatar = document.getElementById('avatar');
-    let clicks = 0;
-    let timer = null;
-    avatar.addEventListener('click', () => {
-      clicks++;
-      if (clicks === 1) {
-        timer = setTimeout(() => { clicks = 0; }, 500);
-      } else if (clicks === 3) {
-        clearTimeout(timer);
-        clicks = 0;
-        window.open('./Home.html', '_blank');
-      }
-    });
-  </script>
 </body>
+
 </html>
