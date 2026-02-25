@@ -54,6 +54,7 @@
       display: flex;
       gap: 18px;
       justify-content: center;
+      margin-bottom: 20px;
     }
 
     .links a {
@@ -72,6 +73,62 @@
       transform: translateY(-2px);
     }
 
+    /* 新增项目区域样式 */
+    .projects {
+      margin-top: 25px;
+      text-align: left;
+    }
+
+    .project-item {
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .project-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #222;
+    }
+
+    .project-title i {
+      color: #ff7e7e;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .project-links a {
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.6);
+      color: #333;
+      font-size: 13px;
+      text-decoration: none;
+      transition: all 0.3s;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .project-links a:hover {
+      background: rgba(255, 255, 255, 0.9);
+      color: #ff7e7e;
+      transform: translateY(-1px);
+    }
+
+    .project-links a i {
+      margin-right: 5px;
+      font-size: 12px;
+    }
+
     footer {
       margin-top: 30px;
       font-size: 12px;
@@ -86,11 +143,54 @@
     <div class="avatar" id="avatar"></div>
     <h1>Maple2085</h1>
     <p class="bio">技术小白 · AI写代码 · 差生文具多</p>
+    
+    <!-- 原有社交链接 -->
     <nav class="links">
-      <a href="https://github.com/Maple2085" target="_blank"><i class="fa-brands fa-github"></i></a>
-      <a href="https://b23.tv/vhu1ny9" target="_blank"><i class="fa-brands fa-bilibili"></i></a>
-      <a href="https://twitter.com/NLQFgzs" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+      <a href="https://github.com/Maple2085" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+      <a href="https://b23.tv/vhu1ny9" target="_blank" title="Bilibili"><i class="fa-brands fa-bilibili"></i></a>
+      <a href="https://twitter.com/NLQFgzs" target="_blank" title="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
     </nav>
+
+    <!-- 新增项目展示区域 -->
+    <div class="projects">
+      
+      <!-- 小米笔记导出 -->
+      <div class="project-item">
+        <div class="project-title">
+          <i class="fa-solid fa-book"></i>
+          小米笔记导出教程
+        </div>
+        <div class="project-links">
+          <a href="https://maple2085.saop.cc/XiaomiNotes.md" target="_blank">
+            <i class="fa-solid fa-file-lines"></i>文档
+          </a>
+          <a href="https://www.bilibili.com/video/BV1hacMztEqy/" target="_blank">
+            <i class="fa-brands fa-bilibili"></i>视频教程
+          </a>
+        </div>
+      </div>
+
+      <!-- 文本分割工具 -->
+      <div class="project-item">
+        <div class="project-title">
+          <i class="fa-solid fa-scissors"></i>
+          文本分割工具
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Maple2085/txt-splitter" target="_blank">
+            <i class="fa-brands fa-github"></i>GitHub
+          </a>
+          <a href="https://txt-splitter.vercel.app/" target="_blank">
+            <i class="fa-solid fa-rocket"></i>入口 A
+          </a>
+          <a href="https://maple2085.github.io/txt-splitter/" target="_blank">
+            <i class="fa-solid fa-globe"></i>入口 B
+          </a>
+        </div>
+      </div>
+
+    </div>
+
     <footer>© 2025 Maple2085 | 欢迎交流</footer>
   </div>
 </body>
