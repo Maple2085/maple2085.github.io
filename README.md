@@ -19,14 +19,6 @@ Hi，我是 **Maple**。
 
 ---
 
-### 📊 GitHub 统计
-
-![Maple2085's GitHub stats](https://github-readme-stats-one-eight.vercel.app/api?username=Maple2085&show_icons=true&theme=transparent)
-
-![Top Langs](https://github-readme-stats-one-eight.vercel.app/api/top-langs/?username=Maple2085&layout=compact&theme=transparent)
-
----
-
 ### 🪶 Visitors
 <p align="center">
   <img src="https://komarev.com/ghpvc/?username=Maple2085&label=Visitors&color=6A9FB5&style=flat-square" alt="visitor badge"/>
