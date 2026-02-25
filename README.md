@@ -21,10 +21,9 @@ Hi，我是 **Maple**。
 
 ### 📊 GitHub 统计
 
-<p align="center">
-![Maple2085's GitHub stats](https://github-readme-stats.vercel.app/api?username=Maple2085&show_icons=true&theme=transparent)
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Maple2085&layout=compact&theme=transparent)
-</p>
+![Maple2085's GitHub stats](https://github-readme-stats-one-eight.vercel.app/api?username=Maple2085&show_icons=true&theme=transparent)
+
+![Top Langs](https://github-readme-stats-one-eight.vercel.app/api/top-langs/?username=Maple2085&layout=compact&theme=transparent)
 
 ---
 
