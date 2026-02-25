@@ -165,12 +165,27 @@
             50% { opacity: 0.5; }
         }
 
-        /* 功能卡片网格 */
+        /* 功能卡片网格 - 修复不对称问题 */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            /* 默认 4列，保证对称 */
+            grid-template-columns: repeat(4, 1fr);
             gap: 25px;
             margin-bottom: 50px;
+        }
+
+        /* 平板：2×2 */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* 手机：1列 */
+        @media (max-width: 640px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .feature-card {
@@ -182,6 +197,9 @@
             overflow: hidden;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
+            height: 100%; /* 确保等高 */
+            display: flex;
+            flex-direction: column;
         }
 
         .feature-card::before {
@@ -222,6 +240,7 @@
             font-size: 14px;
             color: var(--text-secondary);
             line-height: 1.6;
+            flex: 1; /* 让描述占据剩余空间，保持卡片底部对齐 */
         }
 
         /* 代码展示区域 */
@@ -241,6 +260,8 @@
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid var(--glass-border);
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .code-dots {
@@ -267,18 +288,23 @@
         .code-actions {
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .code-btn {
             background: rgba(255, 255, 255, 0.1);
             border: none;
             color: var(--text-primary);
-            padding: 6px 16px;
+            padding: 8px 16px;
             border-radius: 6px;
             font-size: 12px;
             cursor: pointer;
             transition: all 0.3s;
             font-family: 'JetBrains Mono', monospace;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .code-btn:hover {
@@ -502,6 +528,7 @@
             justify-content: center;
             gap: 30px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }
 
         .footer-link {
@@ -545,8 +572,8 @@
                 font-size: 8px;
             }
             
-            .features-grid {
-                grid-template-columns: 1fr;
+            .hero h1 {
+                font-size: 28px;
             }
             
             .code-content {
@@ -556,6 +583,16 @@
             pre {
                 font-size: 11px;
                 padding: 15px;
+            }
+
+            .code-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .code-actions {
+                width: 100%;
+                justify-content: flex-start;
             }
         }
 
@@ -574,8 +611,35 @@
             0%, 50% { opacity: 1; }
             51%, 100% { opacity: 0; }
         }
+
+        /* 警告框 */
+        .warning-box {
+            background: rgba(255, 23, 68, 0.1);
+            border: 1px solid rgba(255, 23, 68, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            align-items: start;
+        }
+
+        .warning-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .warning-content h4 {
+            margin-bottom: 8px;
+            color: var(--accent-red);
+        }
+
+        .warning-content p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
     </style>
-<base target="_blank">
 </head>
 <body>
     <div class="bg-grid"></div>
@@ -607,7 +671,7 @@
             </div>
         </div>
 
-        <!-- Features Grid -->
+        <!-- Features Grid - 现在对称了！ -->
         <div class="features-grid">
             <div class="feature-card">
                 <span class="feature-icon">🚀</span>
@@ -687,8 +751,12 @@
                     <span class="code-title">XiaomiNotes_Exporter_v3.0.js</span>
                 </div>
                 <div class="code-actions">
-                    <button class="code-btn" onclick="copyCode()">📋 复制全部代码</button>
-                    <a href="https://maple2085.saop.cc/XiaomiNotes.md" target="_blank" class="code-btn" style="text-decoration: none;">📄 查看原始文件</a>
+                    <button class="code-btn" onclick="copyCode()">
+                        <span>📋</span> 复制全部代码
+                    </button>
+                    <a href="https://maple2085.saop.cc/XiaomiNotes.md" target="_blank" class="code-btn">
+                        <span>📄</span> 查看原始文件
+                    </a>
                 </div>
             </div>
             <div class="code-content">
@@ -697,11 +765,11 @@
         </div>
 
         <!-- Warning -->
-        <div style="background: rgba(255, 23, 68, 0.1); border: 1px solid rgba(255, 23, 68, 0.3); border-radius: 12px; padding: 20px; margin-top: 30px; display: flex; gap: 15px; align-items: start;">
-            <span style="font-size: 24px;">⚠️</span>
-            <div>
-                <h4 style="margin-bottom: 8px; color: var(--accent-red);">安全提示</h4>
-                <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
+        <div class="warning-box">
+            <span class="warning-icon">⚠️</span>
+            <div class="warning-content">
+                <h4>安全提示</h4>
+                <p>
                     此脚本仅在小米云服务官网 (i.mi.com) 的控制台中执行。请勿在其他网站粘贴执行不明代码，以防账号信息泄露。脚本完全开源，可自行审查代码安全性。
                 </p>
             </div>
@@ -746,21 +814,20 @@
  * 🚀 XIAOMI NOTES ULTIMATE EXPORTER (GEEK EDITION)
  * ------------------------------------------------
  * @version 3.0.0
- * @author Gemini Assistant
+ * @author Maple2085
  * @features ConsoleUI, DarkMode, Search, Glassmorphism, SafeStop
  */
 
 (async function() {
     // ==========================================
-    // 1. 配置与工具 (CONFIG & UTILS)
+    // 配置与工具 (CONFIG & UTILS)
     // ==========================================
     const CONFIG = {
         fileName: \`小米笔记_极客版_\${new Date().toISOString().slice(0,10)}.html\`,
-        delay: 350, // 请求间隔(ms)，防止封控
-        batchLimit: 200 // 单次请求条数
+        delay: 350,
+        batchLimit: 200
     };
 
-    // 全局状态
     const STATE = {
         stopSignal: false,
         total: 0,
@@ -779,28 +846,22 @@
 ██  ██  ██ ██ ██      ██  ██ ██ ██    ██    ██         ██
 ██      ██ ██ ██      ██   ████  ██████     ██    ███████
             \`, "color: #FF6900; font-weight: bold;");
-            console.log(\`%c :: GEEK EDITION :: %c v3.0 Ready \`, "background:#333;color:#fff;border-radius:3px;", "color:#888");
         },
         log: (msg, type = 'info') => {
-            const colors = { info: '#00B0FF', success: '#00E676', warn: '#FFEA00', error: '#FF1744' };
-            const icon = { info: 'ℹ️', success: '✅', warn: '⚠️', error: '❌' };
-            console.log(\`%c\${icon[type]} [\${new Date().toLocaleTimeString()}] %c\${msg}\`, \`font-size:12px\`, \`color:\${colors[type]}; font-family: monospace;\`);
-        },
-        progress: (current, total, detail = "") => {
-            const percent = total > 0 ? Math.floor((current / total) * 100) : 0;
-            const barLength = 20;
-            const filled = Math.floor((percent / 100) * barLength);
-            const bar = "█".repeat(filled) + "░".repeat(barLength - filled);
-            console.log(\`%c[\${bar}] \${percent}% %c \${detail}\`, "color: #FF6900", "color: #999");
+            const colors = { 
+                info: '#00B0FF', 
+                success: '#00E676', 
+                warn: '#FFEA00', 
+                error: '#FF1744' 
+            };
+            console.log(\`%c\${msg}\`, \`color:\${colors[type]}\`);
         }
     };
 
-    // ... 完整代码逻辑 ... (此处省略完整代码以节省空间，实际使用时请放入完整脚本)
-
-    // 执行入口
+    // ... 完整代码逻辑请查看原始文件 ...
+    
     UI.banner();
-    UI.log("系统初始化完成，准备开始导出...", "info");
-    // fetchList() -> fetchDetails() -> generateHTML() -> downloadFile()
+    UI.log("系统初始化完成...", "success");
 })();`;
 
         let index = 0;
@@ -817,11 +878,10 @@
                     codeContent.innerHTML += char;
                 }
                 index++;
-                setTimeout(typeWriter, Math.random() * 10 + 5);
+                setTimeout(typeWriter, Math.random() * 10 + 2);
             }
         }
         
-        // 延迟启动打字机效果
         setTimeout(typeWriter, 500);
 
         // 复制功能
@@ -833,18 +893,6 @@
                 setTimeout(() => toast.classList.remove('show'), 3000);
             });
         }
-
-        // 鼠标跟随效果
-        document.addEventListener('mousemove', (e) => {
-            const cards = document.querySelectorAll('.feature-card');
-            cards.forEach(card => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                card.style.setProperty('--mouse-x', x + 'px');
-                card.style.setProperty('--mouse-y', y + 'px');
-            });
-        });
     </script>
 </body>
 </html>
