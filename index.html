@@ -1,104 +1,439 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
   <meta charset="UTF-8" />
   <title>Maple2085 的个人主页</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdn.imsyy.top/gh/imsyy/file/font/HarmonyOS_Sans/regular.min.css" />
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: "HarmonyOS Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: "HarmonyOS Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       min-height: 100vh;
       background: url("./img/background.jpg") center/cover no-repeat fixed;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 20px;
     }
 
-    .card {
-      width: 90%;
-      max-width: 420px;
-      padding: 50px 40px;
-      border-radius: 24px;
+    /* Bento Grid 容器 */
+    .bento-container {
+      display: grid;
+      grid-template-columns: 280px 1fr 320px;
+      gap: 20px;
+      max-width: 1200px;
+      width: 100%;
+      align-items: stretch;
+    }
+
+    /* 通用卡片样式 */
+    .bento-card {
       background: rgba(255, 255, 255, 0.25);
       backdrop-filter: blur(20px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, .15);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 24px;
       border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .bento-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    /* ========== 左栏：个人资料 ========== */
+    .profile-card {
+      padding: 30px;
+      align-items: center;
       text-align: center;
-      color: #333;
+      justify-content: space-between;
+    }
+
+    .profile-top {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      justify-content: center;
     }
 
     .avatar {
-      width: 90px;
-      height: 90px;
-      margin: 0 auto 20px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       background: #fff url("./img/logo.jpg") center/cover no-repeat;
+      margin-bottom: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
 
     h1 {
-      font-size: 26px;
+      font-size: 28px;
+      color: #333;
       margin-bottom: 8px;
     }
 
     .bio {
-      font-size: 15px;
-      margin-bottom: 30px;
-      opacity: .85;
-    }
-
-    .links {
-      display: flex;
-      gap: 18px;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-
-    .links a {
-      flex: 1;
-      padding: 10px 0;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.5);
-      color: #000;
-      font-size: 22px;
-      transition: .3s;
-    }
-
-    .links a:hover {
-      background: rgba(255, 255, 255, 0.8);
-      color: #ff7e7e;
-      transform: translateY(-2px);
-    }
-
-    /* 新增项目区域样式 */
-    .projects {
-      margin-top: 25px;
-      text-align: left;
-    }
-
-    .project-item {
-      margin-bottom: 20px;
-      padding: 15px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.35);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .project-title {
       font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 10px;
+      color: #555;
+      opacity: 0.9;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-links a {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+      font-size: 20px;
+      transition: all 0.3s;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      text-decoration: none;
+    }
+
+    .social-links a:hover {
+      background: rgba(255, 255, 255, 0.9);
+      color: #ff7e7e;
+      transform: translateY(-3px) scale(1.1);
+    }
+
+    /* ========== 中栏：内容卡片 ========== */
+    .content-column {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      height: 100%;
+    }
+
+    .content-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 35px;
+      min-height: 0;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .card-title {
+      font-size: 42px;
+      font-weight: 700;
+      color: #222;
+      line-height: 1.2;
+      letter-spacing: -1px;
+    }
+
+    .card-icon {
+      width: 70px;
+      height: 70px;
+      opacity: 0.7;
+      flex-shrink: 0;
+      margin-left: 15px;
+    }
+
+    .card-arrow {
+      align-self: flex-end;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-size: 15px;
+      color: #333;
+      transition: all 0.3s;
       display: flex;
       align-items: center;
       gap: 8px;
-      color: #222;
+      font-weight: 500;
     }
 
-    .project-title i {
+    .content-card:hover .card-arrow {
+      background: rgba(255, 126, 126, 0.9);
+      color: #fff;
+      transform: translateX(5px);
+    }
+
+    /* ========== 右栏：宣传轮播 ========== */
+    .promo-card {
+      padding: 25px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .promo-header {
+      font-size: 20px;
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 15px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .carousel-wrapper {
+      position: relative;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .carousel-container {
+      position: relative;
+      flex: 1;
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.05);
+      min-height: 280px;
+    }
+
+    .carousel-slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+      font-size: 14px;
+      transition: all 0.3s;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .carousel-arrow:hover {
+      background: rgba(255, 255, 255, 0.95);
+      transform: translateY(-50%) scale(1.1);
       color: #ff7e7e;
+    }
+
+    .carousel-arrow.prev {
+      left: 10px;
+    }
+
+    .carousel-arrow.next {
+      right: 10px;
+    }
+
+    .carousel-dots {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 15px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .dot.active {
+      background: #ff7e7e;
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    .loading-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: #666;
+      font-size: 14px;
+      gap: 10px;
+    }
+
+    .error-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: #999;
+      font-size: 13px;
+      gap: 8px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* ========== 项目弹窗动画样式 ========== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0);
+      backdrop-filter: blur(0px);
+      -webkit-backdrop-filter: blur(0px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .modal-content {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 0;
+      border-radius: 24px;
+      max-width: 520px;
+      width: 90%;
+      max-height: 85vh;
+      overflow: hidden;
+      transform: scale(0.8) translateY(30px);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 25px 30px;
+      background: linear-gradient(135deg, rgba(255, 126, 126, 0.1) 0%, rgba(102, 126, 234, 0.1) 100%);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .modal-header h2 {
+      color: #333;
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, 0.8);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      font-size: 18px;
+      transition: all 0.3s;
+    }
+
+    .modal-close:hover {
+      background: #ff7e7e;
+      color: #fff;
+      transform: rotate(90deg);
+    }
+
+    .modal-body {
+      padding: 25px 30px;
+      max-height: calc(85vh - 80px);
+      overflow-y: auto;
+    }
+
+    /* 项目卡片 stagger 动画 */
+    .project-item {
+      margin-bottom: 20px;
+      padding: 20px;
+      border-radius: 16px;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: all 0.4s ease;
+    }
+
+    .modal-overlay.active .project-item {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* 依次延迟出现 */
+    .modal-overlay.active .project-item:nth-child(1) { transition-delay: 0.1s; }
+    .modal-overlay.active .project-item:nth-child(2) { transition-delay: 0.2s; }
+    .modal-overlay.active .project-item:nth-child(3) { transition-delay: 0.3s; }
+
+    .project-item:hover {
+      transform: translateX(5px);
+    }
+
+    .project-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .project-links {
@@ -108,95 +443,398 @@
     }
 
     .project-links a {
-      padding: 8px 14px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.6);
+      padding: 8px 16px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.9);
       color: #333;
       font-size: 13px;
       text-decoration: none;
       transition: all 0.3s;
-      border: 1px solid rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
     }
 
     .project-links a:hover {
-      background: rgba(255, 255, 255, 0.9);
-      color: #ff7e7e;
-      transform: translateY(-1px);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
-    .project-links a i {
-      margin-right: 5px;
-      font-size: 12px;
-    }
-
-    footer {
-      margin-top: 30px;
-      font-size: 12px;
-      opacity: .6;
+    .project-item:nth-child(1) .project-title { color: #ff7e7e; }
+    .project-item:nth-child(1) .project-links a:hover {
+      background: #ff7e7e;
       color: #fff;
+      border-color: #ff7e7e;
+    }
+
+    .project-item:nth-child(2) .project-title { color: #667eea; }
+    .project-item:nth-child(2) .project-links a:hover {
+      background: #667eea;
+      color: #fff;
+      border-color: #667eea;
+    }
+
+    /* 滚动条美化 */
+    .modal-body::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .modal-body::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 3px;
+    }
+
+    .modal-body::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 3px;
+    }
+
+    .modal-body::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    /* ========== 响应式 ========== */
+    @media (max-width: 1024px) {
+      .bento-container {
+        grid-template-columns: 1fr;
+        max-width: 600px;
+      }
+      
+      .content-column {
+        height: auto;
+      }
+      
+      .content-card {
+        min-height: 180px;
+      }
+      
+      .card-title {
+        font-size: 32px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .card-title {
+        font-size: 28px;
+      }
+      
+      .card-icon {
+        width: 50px;
+        height: 50px;
+      }
+
+      .modal-content {
+        width: 95%;
+        max-height: 90vh;
+      }
+
+      .modal-header,
+      .modal-body {
+        padding: 20px;
+      }
     }
   </style>
 </head>
-
 <body>
-  <div class="card">
-    <div class="avatar" id="avatar"></div>
-    <h1>Maple2085</h1>
-    <p class="bio">技术小白 · AI写代码 · 差生文具多</p>
+  <div class="bento-container">
     
-    <!-- 原有社交链接 -->
-    <nav class="links">
-      <a href="https://github.com/Maple2085" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
-      <a href="https://b23.tv/vhu1ny9" target="_blank" title="Bilibili"><i class="fa-brands fa-bilibili"></i></a>
-      <a href="https://twitter.com/NLQFgzs" target="_blank" title="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
-    </nav>
-
-    <!-- 新增项目展示区域 -->
-<div class="projects">
-  
-  <!-- 小米笔记导出 -->
-  <div class="project-item">
-    <div class="project-title">
-      <i class="fa-solid fa-book"></i>
-      小米笔记导出教程
+    <!-- 左栏：个人资料 -->
+    <div class="bento-card profile-card">
+      <div class="profile-top">
+        <div class="avatar"></div>
+        <h1>Maple2085</h1>
+        <p class="bio">技术小白 · AI写代码 · 差生文具多</p>
+      </div>
+      <div class="social-links">
+        <a href="https://github.com/Maple2085" target="_blank" title="GitHub">
+          <i class="fa-brands fa-github"></i>
+        </a>
+        <a href="https://b23.tv/vhu1ny9" target="_blank" title="Bilibili">
+          <i class="fa-brands fa-bilibili"></i>
+        </a>
+        <a href="https://twitter.com/NLQFgzs" target="_blank" title="Twitter">
+          <i class="fa-brands fa-x-twitter"></i>
+        </a>
+      </div>
     </div>
-    <div class="project-links">
-      <a href="https://maple2085.saop.cc/XiaomiNotes.md" target="_blank">
-        <i class="fa-solid fa-file-code"></i>控制台原始代码
-      </a>
-      <a href="https://maple2085.saop.cc/XiaomiNotes.html" target="_blank">
-        <i class="fa-solid fa-terminal"></i>Web版教程
-      </a>
-      <a href="https://www.bilibili.com/video/BV1hacMztEqy/" target="_blank">
-        <i class="fa-brands fa-bilibili"></i>视频教程
-      </a>
+
+    <!-- 中栏：内容卡片 -->
+    <div class="content-column">
+      
+      <!-- 帖子 & 文章 -->
+      <div class="bento-card content-card" onclick="location.href='#posts'">
+        <div class="card-header">
+          <div class="card-title">帖子 &<br>文章</div>
+          <svg class="card-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="10" y="20" width="80" height="60" rx="5" fill="rgba(255,255,255,0.5)"/>
+            <line x1="20" y1="35" x2="80" y2="35"/>
+            <line x1="20" y1="50" x2="80" y2="50"/>
+            <line x1="20" y1="65" x2="60" y2="65"/>
+          </svg>
+        </div>
+        <div class="card-arrow">
+          点此进入 <i class="fa-solid fa-arrow-right"></i>
+        </div>
+      </div>
+
+      <!-- 程序 & 项目 -->
+      <div class="bento-card content-card" onclick="showProjects()">
+        <div class="card-header">
+          <div class="card-title">程序 &<br>项目</div>
+          <svg class="card-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="15" y="60" width="70" height="25" rx="3" fill="rgba(255,255,255,0.5)"/>
+            <circle cx="25" cy="72" r="3" fill="#ff7e7e"/>
+            <circle cx="35" cy="72" r="3" fill="#ff7e7e"/>
+            <path d="M50 55 L65 40 L80 55" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="65" cy="35" r="8" fill="rgba(255,255,255,0.6)"/>
+          </svg>
+        </div>
+        <div class="card-arrow">
+          查看项目 <i class="fa-solid fa-arrow-right"></i>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 右栏：宣传轮播 -->
+    <div class="bento-card promo-card">
+      <div class="promo-header">宣传栏</div>
+      
+      <div class="carousel-wrapper">
+        <div class="carousel-container" id="carouselContainer">
+          <div class="loading-state" id="loadingState">
+            <i class="fa-solid fa-spinner fa-spin" style="font-size: 32px; opacity: 0.5;"></i>
+            <span>正在加载图片...</span>
+          </div>
+        </div>
+        
+        <button class="carousel-arrow prev" onclick="prevSlide()" id="prevBtn" style="display: none;">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button class="carousel-arrow next" onclick="nextSlide()" id="nextBtn" style="display: none;">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+      
+      <div class="carousel-dots" id="carouselDots"></div>
+    </div>
+
+  </div>
+
+  <!-- 项目详情弹窗 - 新结构 -->
+  <div class="modal-overlay" id="projectModal" onclick="closeProjectsOnOverlay(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h2><i class="fa-solid fa-rocket" style="margin-right: 10px; color: #ff7e7e;"></i>我的项目</h2>
+        <button class="modal-close" onclick="closeProjects()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <!-- 小米笔记 -->
+        <div class="project-item">
+          <div class="project-title">
+            <i class="fa-solid fa-book"></i>
+            小米笔记导出教程
+          </div>
+          <div class="project-links">
+            <a href="https://maple2085.saop.cc/XiaomiNotes.md" target="_blank">
+              <i class="fa-solid fa-file-code"></i> 控制台代码
+            </a>
+            <a href="https://maple2085.saop.cc/XiaomiNotes.html" target="_blank">
+              <i class="fa-solid fa-terminal"></i> Web版
+            </a>
+            <a href="https://www.bilibili.com/video/BV1hacMztEqy/" target="_blank">
+              <i class="fa-brands fa-bilibili"></i> 视频教程
+            </a>
+          </div>
+        </div>
+
+        <!-- 文本分割 -->
+        <div class="project-item">
+          <div class="project-title">
+            <i class="fa-solid fa-scissors"></i>
+            文本分割工具
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/Maple2085/txt-splitter" target="_blank">
+              <i class="fa-brands fa-github"></i> GitHub
+            </a>
+            <a href="https://txt-splitter.vercel.app/" target="_blank">
+              <i class="fa-solid fa-rocket"></i> 入口A
+            </a>
+            <a href="https://maple2085.github.io/txt-splitter/" target="_blank">
+              <i class="fa-solid fa-globe"></i> 入口B
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- 文本分割工具 -->
-  <div class="project-item">
-    <div class="project-title">
-      <i class="fa-solid fa-scissors"></i>
-      文本分割工具
-    </div>
-    <div class="project-links">
-      <a href="https://github.com/Maple2085/txt-splitter" target="_blank">
-        <i class="fa-brands fa-github"></i>GitHub
-      </a>
-      <a href="https://txt-splitter.vercel.app/" target="_blank">
-        <i class="fa-solid fa-rocket"></i>入口 A
-      </a>
-      <a href="https://maple2085.github.io/txt-splitter/" target="_blank">
-        <i class="fa-solid fa-globe"></i>入口 B
-      </a>
-    </div>
-  </div>
+  <script>
+    // 轮播状态
+    let currentSlide = 0;
+    let adImages = [];
+    let autoPlayInterval;
 
-</div>
+    // 扫描 ad 文件夹
+    async function scanAdFolder() {
+      const container = document.getElementById('carouselContainer');
+      const extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+      const maxImages = 20;
+      
+      const imagePromises = [];
+      
+      for (let i = 1; i <= maxImages; i++) {
+        extensions.forEach(ext => {
+          imagePromises.push(checkImageExists(`ad/pic${i}.${ext}`));
+        });
+        
+        if (i <= 5) {
+          extensions.forEach(ext => {
+            imagePromises.push(checkImageExists(`ad/ad${i}.${ext}`));
+            imagePromises.push(checkImageExists(`ad/banner${i}.${ext}`));
+            imagePromises.push(checkImageExists(`ad/img${i}.${ext}`));
+          });
+        }
+      }
+      
+      extensions.forEach(ext => {
+        imagePromises.push(checkImageExists(`ad/image.${ext}`));
+        imagePromises.push(checkImageExists(`ad/banner.${ext}`));
+      });
+      
+      const results = await Promise.all(imagePromises);
+      adImages = [...new Set(results.filter(url => url !== null))];
+      
+      if (adImages.length === 0) {
+        container.innerHTML = `
+          <div class="error-state">
+            <i class="fa-regular fa-folder-open" style="font-size: 40px; opacity: 0.4;"></i>
+            <span>未在 ad 文件夹找到图片</span>
+            <span style="font-size: 11px; opacity: 0.7;">请确保图片存在且命名为<br>pic1.jpg, pic2.png 等格式</span>
+          </div>
+        `;
+        return;
+      }
+      
+      adImages.sort((a, b) => extractNumber(a) - extractNumber(b));
+      initCarousel();
+    }
 
-    <footer>© 2025 Maple2085 | 欢迎交流</footer>
-  </div>
+    function checkImageExists(url) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(url);
+        img.onerror = () => resolve(null);
+        img.src = url;
+      });
+    }
+
+    function extractNumber(filename) {
+      const match = filename.match(/(\d+)/);
+      return match ? parseInt(match[1]) : 0;
+    }
+
+    function initCarousel() {
+      const container = document.getElementById('carouselContainer');
+      const dotsContainer = document.getElementById('carouselDots');
+      
+      container.innerHTML = '';
+      dotsContainer.innerHTML = '';
+      
+      adImages.forEach((src, index) => {
+        const slide = document.createElement('div');
+        slide.className = 'carousel-slide' + (index === 0 ? ' active' : '');
+        slide.innerHTML = `<img src="${src}" alt="宣传图片 ${index + 1}" loading="lazy">`;
+        container.appendChild(slide);
+        
+        const dot = document.createElement('span');
+        dot.className = 'dot' + (index === 0 ? ' active' : '');
+        dot.onclick = () => goToSlide(index);
+        dotsContainer.appendChild(dot);
+      });
+      
+      document.getElementById('prevBtn').style.display = 'flex';
+      document.getElementById('nextBtn').style.display = 'flex';
+      
+      currentSlide = 0;
+      startAutoPlay();
+    }
+
+    function goToSlide(n) {
+      const slides = document.querySelectorAll('.carousel-slide');
+      const dots = document.querySelectorAll('.dot');
+      
+      if (slides.length === 0) return;
+      
+      slides[currentSlide].classList.remove('active');
+      dots[currentSlide].classList.remove('active');
+      
+      currentSlide = n;
+      if (currentSlide >= slides.length) currentSlide = 0;
+      if (currentSlide < 0) currentSlide = slides.length - 1;
+      
+      slides[currentSlide].classList.add('active');
+      dots[currentSlide].classList.add('active');
+    }
+
+    function nextSlide() {
+      goToSlide(currentSlide + 1);
+      resetAutoPlay();
+    }
+
+    function prevSlide() {
+      goToSlide(currentSlide - 1);
+      resetAutoPlay();
+    }
+
+    function startAutoPlay() {
+      autoPlayInterval = setInterval(() => {
+        goToSlide(currentSlide + 1);
+      }, 4000);
+    }
+
+    function resetAutoPlay() {
+      clearInterval(autoPlayInterval);
+      startAutoPlay();
+    }
+
+    // 弹窗控制 - 新动画逻辑
+    function showProjects() {
+      const modal = document.getElementById('projectModal');
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeProjects() {
+      const modal = document.getElementById('projectModal');
+      modal.classList.remove('active');
+      
+      // 等待动画结束后恢复滚动
+      setTimeout(() => {
+        document.body.style.overflow = 'auto';
+      }, 400);
+    }
+
+    function closeProjectsOnOverlay(event) {
+      if (event.target === event.currentTarget) {
+        closeProjects();
+      }
+    }
+
+    // ESC 键关闭
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeProjects();
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', scanAdFolder);
+  </script>
 </body>
-
-
 </html>
