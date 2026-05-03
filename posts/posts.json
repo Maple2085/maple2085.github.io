@@ -1,0 +1,26 @@
+[
+  {
+    "id": "example",
+    "title": "这是一篇示例帖子",
+    "cover": "covers/example.jpg",
+    "summary": "这里是帖子的简短摘要，介绍一下这篇文章的大致内容，让读者快速了解。",
+    "tags": ["教程", "工具"],
+    "date": "2025-05-01"
+  },
+  {
+    "id": "xiaomi-notes",
+    "title": "小米笔记导出教程",
+    "cover": "covers/xiaomi.jpg",
+    "summary": "详细介绍如何将小米笔记的内容导出为通用格式，方便迁移和备份。",
+    "tags": ["教程", "小米"],
+    "date": "2025-04-20"
+  },
+  {
+    "id": "txt-splitter",
+    "title": "文本分割工具介绍",
+    "cover": "covers/txt.jpg",
+    "summary": "一个用于将长文本按需分割的小工具，支持多种分割方式，开源免费。",
+    "tags": ["工具", "开源"],
+    "date": "2025-03-15"
+  }
+]

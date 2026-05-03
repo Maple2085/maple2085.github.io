@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>帖子标题 — Maple2085</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.imsyy.top/gh/imsyy/file/font/HarmonyOS_Sans/regular.min.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "HarmonyOS Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      background: url("../img/background.jpg") center/cover no-repeat fixed;
+      padding: 40px 20px;
+      color: #222;
+    }
+
+    /* ===== 顶部导航 ===== */
+    .top-nav {
+      max-width: 780px;
+      margin: 0 auto 28px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.3);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 50px;
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255,255,255,0.6);
+    }
+
+    .nav-btn.back:hover { transform: translateX(-3px); }
+
+    /* ===== 文章主体卡片 ===== */
+    .article-card {
+      max-width: 780px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.3);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.45);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.13);
+      overflow: hidden;
+      animation: fadeInUp 0.4s ease both;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 封面 */
+    .article-cover {
+      width: 100%;
+      max-height: 340px;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* 文章信息区 */
+    .article-header {
+      padding: 32px 40px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .article-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .article-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 50px;
+      background: rgba(255,126,126,0.15);
+      color: #c0504a;
+    }
+
+    .article-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1a1a1a;
+      line-height: 1.35;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+
+    .article-meta {
+      font-size: 13px;
+      color: #888;
+      display: flex;
+      gap: 18px;
+    }
+
+    .article-meta span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* 正文区 */
+    .article-body {
+      padding: 32px 40px 40px;
+      font-size: 15px;
+      line-height: 1.9;
+      color: #333;
+    }
+
+    /* 正文排版 */
+    .article-body h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 28px 0 12px;
+      padding-left: 12px;
+      border-left: 3px solid #ff7e7e;
+    }
+
+    .article-body h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #222;
+      margin: 20px 0 8px;
+    }
+
+    .article-body p { margin-bottom: 16px; }
+
+    .article-body a {
+      color: #e06060;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .article-body code {
+      font-family: "Courier New", monospace;
+      font-size: 13px;
+      background: rgba(0,0,0,0.06);
+      padding: 2px 7px;
+      border-radius: 5px;
+      color: #c0504a;
+    }
+
+    .article-body pre {
+      background: rgba(0,0,0,0.06);
+      border-radius: 12px;
+      padding: 18px 20px;
+      overflow-x: auto;
+      margin: 16px 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .article-body pre code {
+      background: none;
+      padding: 0;
+      color: #333;
+    }
+
+    .article-body img {
+      max-width: 100%;
+      border-radius: 12px;
+      margin: 12px 0;
+    }
+
+    .article-body ul, .article-body ol {
+      padding-left: 22px;
+      margin-bottom: 16px;
+    }
+
+    .article-body li { margin-bottom: 6px; }
+
+    .article-body blockquote {
+      margin: 16px 0;
+      padding: 14px 20px;
+      border-left: 3px solid #ff7e7e;
+      background: rgba(255,126,126,0.07);
+      border-radius: 0 10px 10px 0;
+      color: #555;
+      font-style: italic;
+    }
+
+    /* ===== 响应式 ===== */
+    @media (max-width: 600px) {
+      .article-header, .article-body { padding: 24px 22px; }
+      .article-title { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 顶部导航 -->
+  <nav class="top-nav">
+    <a href="../posts.html" class="nav-btn back">
+      <i class="fa-solid fa-arrow-left"></i> 返回列表
+    </a>
+    <a href="../index.html" class="nav-btn">
+      <i class="fa-solid fa-house"></i> 主页
+    </a>
+  </nav>
+
+  <!-- 文章卡片 -->
+  <article class="article-card">
+
+    <!-- 封面图（没有封面可删掉这行） -->
+    <img class="article-cover" src="covers/example.jpg" alt="封面图" onerror="this.style.display='none'">
+
+    <!-- 文章头部 -->
+    <header class="article-header">
+      <div class="article-tags">
+        <span class="article-tag">教程</span>
+        <span class="article-tag">工具</span>
+      </div>
+      <h1 class="article-title">这是帖子的标题，替换成你的内容</h1>
+      <div class="article-meta">
+        <span><i class="fa-regular fa-calendar"></i> 2025年5月1日</span>
+        <span><i class="fa-regular fa-user"></i> Maple2085</span>
+      </div>
+    </header>
+
+    <!-- 正文 —— 在这里写你的内容 -->
+    <div class="article-body">
+
+      <p>这里是帖子的开头段落，介绍文章的背景和目的。你可以直接在这里写 HTML，也可以用任何你喜欢的方式组织内容。</p>
+
+      <h2>第一部分</h2>
+      <p>这里写第一部分的正文内容。支持各种 HTML 标签。</p>
+
+      <h2>代码示例</h2>
+      <pre><code># 这是一段示例代码
+print("Hello, Maple2085!")</code></pre>
+
+      <h2>引用</h2>
+      <blockquote>这里可以放一段引用或重点提示。</blockquote>
+
+      <p>更多内容继续往下写即可……</p>
+
+    </div>
+  </article>
+
+</body>
+</html>
