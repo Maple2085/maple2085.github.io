@@ -3,571 +3,715 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Maple2085 的个人主页</title>
+  <title>Maple2085</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Maple2085 的个人主页 — 技术小白 · AI指令工具人" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdn.imsyy.top/gh/imsyy/file/font/HarmonyOS_Sans/regular.min.css" />
   <style>
-    * {
+    :root {
+      --cream: #f7f5f0;
+      --blue-0: #e8f2ff;
+      --blue-1: #c8deff;
+      --blue-2: #93bcff;
+      --blue-3: #5b9bff;
+      --blue-4: #2563eb;
+      --frost: rgba(245, 248, 255, 0.72);
+      --border: rgba(180, 210, 255, 0.45);
+      --text-1: #0f1623;
+      --text-2: #3a4a6b;
+      --text-3: #7a8fb5;
+      --shadow-sm: 0 2px 12px rgba(50, 100, 200, 0.08);
+      --shadow-md: 0 8px 40px rgba(50, 100, 200, 0.13);
+      --shadow-lg: 0 24px 80px rgba(50, 100, 200, 0.20);
+      --radius: 24px;
+      --font-d: 'Syne', 'HarmonyOS Sans', sans-serif;
+      --font-b: 'HarmonyOS Sans', -apple-system, sans-serif;
+    }
+
+    *,
+    *::before,
+    *::after {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
     }
 
     body {
-      font-family: "HarmonyOS Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: var(--font-b);
+      background: var(--cream);
+      color: var(--text-1);
       min-height: 100vh;
-      background: url("./img/background.jpg") center/cover no-repeat fixed;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+      overflow-x: hidden;
+      cursor: none
     }
 
-    /* Bento Grid 容器 */
-    .bento-container {
-      display: grid;
-      grid-template-columns: 280px 1fr 320px;
-      gap: 20px;
-      max-width: 1200px;
-      width: 100%;
-      align-items: stretch;
-    }
-
-    /* 通用卡片样式 */
-    .bento-card {
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .bento-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
-    }
-
-    /* ========== 左栏：个人资料 ========== */
-    .profile-card {
-      padding: 30px;
-      align-items: center;
-      text-align: center;
-      justify-content: space-between;
-    }
-
-    .profile-top {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      flex: 1;
-      justify-content: center;
-    }
-
-    .avatar {
-      width: 120px;
-      height: 120px;
+    /* ── Cursor ── */
+    #cur {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: var(--blue-4);
       border-radius: 50%;
-      background: #fff url("./img/logo.jpg") center/cover no-repeat;
-      margin-bottom: 20px;
-      border: 3px solid rgba(255, 255, 255, 0.6);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width .2s, height .2s, background .2s;
+      mix-blend-mode: multiply
     }
 
-    h1 {
-      font-size: 28px;
-      color: #333;
-      margin-bottom: 8px;
+    #cur-r {
+      position: fixed;
+      width: 34px;
+      height: 34px;
+      border: 1.5px solid rgba(37, 99, 235, .35);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width .35s cubic-bezier(.23, 1, .32, 1), height .35s cubic-bezier(.23, 1, .32, 1)
     }
 
+    body:has(.card:hover) #cur {
+      width: 18px;
+      height: 18px;
+      background: var(--blue-3)
+    }
+
+    body:has(.card:hover) #cur-r {
+      width: 52px;
+      height: 52px;
+      border-color: rgba(91, 155, 255, .45)
+    }
+
+    /* 桌面端彻底隐藏原生鼠标 */
+    @media (hover: hover) and (pointer: fine) {
+
+      *,
+      *::before,
+      *::after {
+        cursor: none !important;
+      }
+    }
+
+    /* 移动端关闭自定义鼠标 */
+    @media (hover: none),
+    (pointer: coarse) {
+
+      #cur,
+      #cur-r {
+        display: none;
+      }
+    }
+
+    /* ── Background ── */
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: var(--cream);
+      overflow: hidden
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: .5;
+      will-change: transform
+    }
+
+    .o1 {
+      width: 720px;
+      height: 720px;
+      background: radial-gradient(circle, #bbd5ff 0%, transparent 70%);
+      top: -200px;
+      left: -150px;
+      animation: o1 20s ease-in-out infinite alternate
+    }
+
+    .o2 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, #cde3ff 0%, transparent 70%);
+      bottom: -120px;
+      right: -100px;
+      animation: o2 26s ease-in-out infinite alternate
+    }
+
+    .o3 {
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, #deeeff 0%, transparent 70%);
+      top: 40%;
+      left: 50%;
+      animation: o3 16s ease-in-out infinite alternate
+    }
+
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(140, 185, 255, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(140, 185, 255, .06) 1px, transparent 1px);
+      background-size: 64px 64px
+    }
+
+    @keyframes o1 {
+      to {
+        transform: translate(90px, 70px) scale(1.12)
+      }
+    }
+
+    @keyframes o2 {
+      to {
+        transform: translate(-70px, -90px) scale(1.18)
+      }
+    }
+
+    @keyframes o3 {
+      to {
+        transform: translate(-110px, 50px) scale(.88)
+      }
+    }
+
+    /* ── Layout ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 64px 24px;
+      gap: 36px
+    }
+
+    /* ── Entrance ── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(28px);
+        filter: blur(8px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0)
+      }
+    }
+
+    .a {
+      opacity: 0;
+      animation: fadeUp .75s cubic-bezier(.22, 1, .36, 1) forwards
+    }
+
+    .a1 {
+      animation-delay: .05s
+    }
+
+    .a2 {
+      animation-delay: .18s
+    }
+
+    .a3 {
+      animation-delay: .32s
+    }
+
+    .a4 {
+      animation-delay: .46s
+    }
+
+    .a5 {
+      animation-delay: .60s
+    }
+
+    /* ── Hero ── */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+      text-align: center
+    }
+
+    /* Avatar */
+    .av-wrap {
+      position: relative;
+      width: 126px;
+      height: 126px
+    }
+
+    .av-ring {
+      position: absolute;
+      inset: -7px;
+      border-radius: 50%;
+      background: conic-gradient(var(--blue-3) 0deg, var(--blue-1) 90deg, #f0f4ff 180deg, var(--blue-2) 270deg, var(--blue-3) 360deg);
+      animation: spin 5s linear infinite;
+      filter: blur(1px)
+    }
+
+    .av-ring2 {
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: var(--cream)
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    .av-p1 {
+      position: absolute;
+      inset: -16px;
+      border-radius: 50%;
+      border: 1px solid rgba(91, 155, 255, .28);
+      animation: pulse 3.2s ease-in-out infinite
+    }
+
+    .av-p2 {
+      position: absolute;
+      inset: -28px;
+      border-radius: 50%;
+      border: 1px solid rgba(91, 155, 255, .13);
+      animation: pulse 3.2s ease-in-out infinite .55s
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1)
+      }
+
+      50% {
+        opacity: .35;
+        transform: scale(1.05)
+      }
+    }
+
+    .av-img {
+      position: relative;
+      z-index: 1;
+      width: 126px;
+      height: 126px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block
+    }
+
+    .av-fb {
+      position: relative;
+      z-index: 1;
+      width: 126px;
+      height: 126px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 52px;
+      color: white
+    }
+
+    /* Name */
+    .name {
+      font-family: var(--font-d);
+      font-size: clamp(40px, 8vw, 72px);
+      font-weight: 800;
+      letter-spacing: -2.5px;
+      line-height: 1;
+      background: linear-gradient(140deg, var(--text-1) 20%, var(--blue-4) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text
+    }
+
+    /* Bio */
     .bio {
-      font-size: 14px;
-      color: #555;
-      opacity: 0.9;
-    }
-
-    .social-links {
+      font-size: 15px;
+      color: var(--text-3);
+      letter-spacing: .6px;
       display: flex;
-      gap: 15px;
-      margin-top: 20px;
+      align-items: center;
+      gap: 12px
     }
 
-    .social-links a {
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.5);
+    .bio::before,
+    .bio::after {
+      content: '';
+      display: block;
+      width: 36px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--blue-2))
+    }
+
+    .bio::after {
+      background: linear-gradient(90deg, var(--blue-2), transparent)
+    }
+
+    .blink {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: var(--blue-3);
+      margin-left: 2px;
+      vertical-align: middle;
+      animation: blink .9s step-end infinite
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0
+      }
+    }
+
+    /* Social */
+    .social {
+      display: flex;
+      gap: 12px
+    }
+
+    .sb {
+      width: 46px;
+      height: 46px;
+      border-radius: 15px;
+      background: var(--frost);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #333;
-      font-size: 20px;
-      transition: all 0.3s;
-      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: var(--text-2);
+      font-size: 19px;
       text-decoration: none;
+      box-shadow: var(--shadow-sm);
+      transition: transform .35s cubic-bezier(.34, 1.56, .64, 1), background .3s, box-shadow .3s, color .3s
     }
 
-    .social-links a:hover {
-      background: rgba(255, 255, 255, 0.9);
-      color: #ff7e7e;
-      transform: translateY(-3px) scale(1.1);
+    .sb:hover {
+      transform: translateY(-7px) scale(1.1);
+      background: white;
+      box-shadow: var(--shadow-md);
+      color: var(--blue-4)
     }
 
-    /* ========== 中栏：内容卡片 ========== */
-    .content-column {
+    /* ── Cards ── */
+    .cards {
       display: flex;
-      flex-direction: column;
       gap: 20px;
-      height: 100%;
+      width: 100%;
+      max-width: 680px
     }
 
-    .content-card {
+    .card {
+      flex: 1;
+      background: var(--frost);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      padding: 34px 28px;
+      text-decoration: none;
+      color: var(--text-1);
+      cursor: none;
       position: relative;
       overflow: hidden;
-      cursor: pointer;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 35px;
-      min-height: 0;
+      transition: transform .45s cubic-bezier(.23, 1, .32, 1), box-shadow .45s, border-color .3s;
+      transform-style: preserve-3d;
+      will-change: transform
     }
 
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+    /* shine */
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(500px circle at var(--mx, 50%) var(--my, 50%), rgba(140, 195, 255, .2), transparent 55%);
+      opacity: 0;
+      transition: opacity .3s;
+      pointer-events: none;
+      border-radius: inherit
     }
 
-    .card-title {
-      font-size: 42px;
-      font-weight: 700;
-      color: #222;
-      line-height: 1.2;
-      letter-spacing: -1px;
+    .card:hover::before {
+      opacity: 1
+    }
+
+    /* top line */
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 28px;
+      right: 28px;
+      height: 1.5px;
+      background: linear-gradient(90deg, transparent, var(--blue-2), transparent);
+      opacity: 0;
+      transition: opacity .3s
+    }
+
+    .card:hover::after {
+      opacity: 1
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(140, 195, 255, .65)
     }
 
     .card-icon {
-      width: 70px;
-      height: 70px;
-      opacity: 0.7;
-      flex-shrink: 0;
-      margin-left: 15px;
+      width: 54px;
+      height: 54px;
+      border-radius: 17px;
+      background: linear-gradient(135deg, var(--blue-1), var(--blue-0));
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 23px;
+      color: var(--blue-4);
+      margin-bottom: 22px;
+      transition: transform .4s cubic-bezier(.34, 1.56, .64, 1), box-shadow .3s;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, .12)
     }
 
-    .card-arrow {
-      align-self: flex-end;
-      background: rgba(255, 255, 255, 0.6);
-      padding: 12px 24px;
-      border-radius: 25px;
-      font-size: 15px;
-      color: #333;
-      transition: all 0.3s;
-      display: flex;
+    .card:hover .card-icon {
+      transform: scale(1.14) rotate(-5deg);
+      box-shadow: 0 8px 28px rgba(37, 99, 235, .22)
+    }
+
+    .card-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--blue-3);
+      margin-bottom: 7px
+    }
+
+    .card-title {
+      font-family: var(--font-d);
+      font-size: 27px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 11px
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-3);
+      line-height: 1.7;
+      margin-bottom: 26px
+    }
+
+    .card-cta {
+      display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-weight: 500;
-    }
-
-    .content-card:hover .card-arrow {
-      background: rgba(255, 126, 126, 0.9);
-      color: #fff;
-      transform: translateX(5px);
-    }
-
-    /* ========== 项目弹窗动画样式 ========== */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0);
-      backdrop-filter: blur(0px);
-      -webkit-backdrop-filter: blur(0px);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .modal-overlay.active {
-      opacity: 1;
-      visibility: visible;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
-
-    .modal-content {
-      background: rgba(255, 255, 255, 0.95);
-      padding: 0;
-      border-radius: 24px;
-      max-width: 520px;
-      width: 90%;
-      max-height: 85vh;
-      overflow: hidden;
-      transform: scale(0.8) translateY(30px);
-      opacity: 0;
-      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-    }
-
-    .modal-overlay.active .modal-content {
-      transform: scale(1) translateY(0);
-      opacity: 1;
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 25px 30px;
-      background: linear-gradient(135deg, rgba(255, 126, 126, 0.1) 0%, rgba(102, 126, 234, 0.1) 100%);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    }
-
-    .modal-header h2 {
-      color: #333;
-      font-size: 24px;
-      font-weight: 700;
-      margin: 0;
-    }
-
-    .modal-close {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: none;
-      background: rgba(255, 255, 255, 0.8);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #666;
-      font-size: 18px;
-      transition: all 0.3s;
-    }
-
-    .modal-close:hover {
-      background: #ff7e7e;
-      color: #fff;
-      transform: rotate(90deg);
-    }
-
-    .modal-body {
-      padding: 25px 30px;
-      max-height: calc(85vh - 80px);
-      overflow-y: auto;
-    }
-
-    /* 项目卡片 stagger 动画 */
-    .project-item {
-      margin-bottom: 20px;
-      padding: 20px;
-      border-radius: 16px;
-      opacity: 0;
-      transform: translateX(-20px);
-      transition: all 0.4s ease;
-    }
-
-    .modal-overlay.active .project-item {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    /* 依次延迟出现 */
-    .modal-overlay.active .project-item:nth-child(1) {
-      transition-delay: 0.1s;
-    }
-
-    .modal-overlay.active .project-item:nth-child(2) {
-      transition-delay: 0.2s;
-    }
-
-    .modal-overlay.active .project-item:nth-child(3) {
-      transition-delay: 0.3s;
-    }
-
-    .project-item:hover {
-      transform: translateX(5px);
-    }
-
-    .project-title {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .project-links {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .project-links a {
-      padding: 8px 16px;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.9);
-      color: #333;
       font-size: 13px;
-      text-decoration: none;
-      transition: all 0.3s;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 500;
+      font-weight: 600;
+      color: var(--blue-4);
+      letter-spacing: .3px;
+      transition: transform .4s cubic-bezier(.34, 1.56, .64, 1);
+      transform-origin: left center
     }
 
-    .project-links a:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    .card-cta i {
+      font-size: 11px;
+      transition: transform .3s cubic-bezier(.34, 1.56, .64, 1)
     }
 
-    .project-item:nth-child(1) .project-title {
-      color: #ff7e7e;
+    .card:hover .card-cta i {
+      transform: translateX(6px)
     }
 
-    .project-item:nth-child(1) .project-links a:hover {
-      background: #ff7e7e;
-      color: #fff;
-      border-color: #ff7e7e;
+    .card:hover .card-cta {
+      transform: scale(1.14)
     }
 
-    .project-item:nth-child(2) .project-title {
-      color: #667eea;
+    /* Ripple */
+    .rip {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(91, 155, 255, .22);
+      transform: scale(0);
+      animation: rip .65s linear;
+      pointer-events: none
     }
 
-    .project-item:nth-child(2) .project-links a:hover {
-      background: #667eea;
-      color: #fff;
-      border-color: #667eea;
-    }
-
-    /* 滚动条美化 */
-    .modal-body::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .modal-body::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.05);
-      border-radius: 3px;
-    }
-
-    .modal-body::-webkit-scrollbar-thumb {
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 3px;
-    }
-
-    .modal-body::-webkit-scrollbar-thumb:hover {
-      background: rgba(0, 0, 0, 0.3);
-    }
-
-    /* ========== 响应式 ========== */
-    @media (max-width: 1024px) {
-      .bento-container {
-        grid-template-columns: 1fr;
-        max-width: 600px;
-      }
-
-      .content-column {
-        height: auto;
-      }
-
-      .content-card {
-        min-height: 180px;
-      }
-
-      .card-title {
-        font-size: 32px;
+    @keyframes rip {
+      to {
+        transform: scale(4);
+        opacity: 0
       }
     }
 
-    @media (max-width: 600px) {
-      .card-title {
-        font-size: 28px;
+    /* ── Footer ── */
+    .ft {
+      font-size: 12px;
+      color: var(--text-3);
+      letter-spacing: .5px;
+      opacity: .65
+    }
+
+    /* ── Responsive ── */
+    @media(max-width:600px) {
+      .cards {
+        flex-direction: column;
+        max-width: 100%
       }
 
-      .card-icon {
-        width: 50px;
-        height: 50px;
+      .card {
+        padding: 28px 22px
       }
 
-      .modal-content {
-        width: 95%;
-        max-height: 90vh;
-      }
-
-      .modal-header,
-      .modal-body {
-        padding: 20px;
+      .name {
+        letter-spacing: -1.5px
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="bento-container">
+  <div id="cur"></div>
+  <div id="cur-r"></div>
 
-    <!-- 左栏：个人资料 -->
-    <div class="bento-card profile-card">
-      <div class="profile-top">
-        <div class="avatar"></div>
-        <h1>Maple2085</h1>
-        <p class="bio">技术小白 · AI指令工具人</p>
-      </div>
-      <div class="social-links">
-        <a href="https://github.com/Maple2085" target="_blank" title="GitHub">
-          <i class="fa-brands fa-github"></i>
-        </a>
-        <a href="https://b23.tv/vhu1ny9" target="_blank" title="Bilibili">
-          <i class="fa-brands fa-bilibili"></i>
-        </a>
-        <a href="https://twitter.com/NLQFgzs" target="_blank" title="Twitter">
-          <i class="fa-brands fa-x-twitter"></i>
-        </a>
-      </div>
-    </div>
-
-    <!-- 中栏：内容卡片 -->
-    <div class="content-column">
-
-      <!-- 帖子 & 文章 -->
-      <div class="bento-card content-card" onclick="location.href='posts.html'">
-        <div class="card-header">
-          <div class="card-title">帖子 &<br>文章</div>
-          <svg class="card-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="10" y="20" width="80" height="60" rx="5" fill="rgba(255,255,255,0.5)" />
-            <line x1="20" y1="35" x2="80" y2="35" />
-            <line x1="20" y1="50" x2="80" y2="50" />
-            <line x1="20" y1="65" x2="60" y2="65" />
-          </svg>
-        </div>
-        <div class="card-arrow">
-          点此进入 <i class="fa-solid fa-arrow-right"></i>
-        </div>
-      </div>
-
-      <!-- 程序 & 项目 -->
-      <div class="bento-card content-card" onclick="showProjects()">
-        <div class="card-header">
-          <div class="card-title">程序 &<br>项目</div>
-          <svg class="card-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="15" y="60" width="70" height="25" rx="3" fill="rgba(255,255,255,0.5)" />
-            <circle cx="25" cy="72" r="3" fill="#ff7e7e" />
-            <circle cx="35" cy="72" r="3" fill="#ff7e7e" />
-            <path d="M50 55 L65 40 L80 55" stroke-linecap="round" stroke-linejoin="round" />
-            <circle cx="65" cy="35" r="8" fill="rgba(255,255,255,0.6)" />
-          </svg>
-        </div>
-        <div class="card-arrow">
-          查看项目 <i class="fa-solid fa-arrow-right"></i>
-        </div>
-      </div>
-
-    </div>
-
-
+  <div class="bg">
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="orb o3"></div>
+    <div class="bg-grid"></div>
   </div>
 
-  <!-- 项目详情弹窗 - 新结构 -->
-  <div class="modal-overlay" id="projectModal" onclick="closeProjectsOnOverlay(event)">
-    <div class="modal-content" onclick="event.stopPropagation()">
-      <div class="modal-header">
-        <h2><i class="fa-solid fa-rocket" style="margin-right: 10px; color: #ff7e7e;"></i>我的项目</h2>
-        <button class="modal-close" onclick="closeProjects()">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
+  <div class="page">
+    <section class="hero">
+      <div class="av-wrap a a1">
+        <div class="av-p2"></div>
+        <div class="av-p1"></div>
+        <div class="av-ring"></div>
+        <div class="av-ring2"></div>
+        <img class="av-img" src="./img/logo.jpg" alt="Maple2085 头像" loading="eager" decoding="async"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="av-fb" style="display:none"><i class="fa-solid fa-user"></i></div>
       </div>
 
-      <div class="modal-body">
-        <!-- 小米笔记 -->
-        <div class="project-item">
-          <div class="project-title">
-            <i class="fa-solid fa-book"></i>
-            小米笔记导出教程
-          </div>
-          <div class="project-links">
-            <a href="https://maple2085.saop.cc/XiaomiNotes.md" target="_blank">
-              <i class="fa-solid fa-file-code"></i> 源代码代码
-            </a>
-            <a href="https://maple2085.saop.cc/XiaomiNotes.html" target="_blank">
-              <i class="fa-solid fa-terminal"></i> Web版教程和引导
-            </a>
-            <a href="https://www.bilibili.com/video/BV1hacMztEqy/" target="_blank">
-              <i class="fa-brands fa-bilibili"></i> 哔哩哔哩视频教程
-            </a>
-          </div>
-        </div>
+      <h1 class="name a a2">Maple2085</h1>
 
-        <!-- 文本分割 -->
-        <div class="project-item">
-          <div class="project-title">
-            <i class="fa-solid fa-scissors"></i>
-            文本分割工具
-          </div>
-          <div class="project-links">
-            <a href="https://github.com/Maple2085/txt-splitter" target="_blank">
-              <i class="fa-brands fa-github"></i> GitHub
-            </a>
-            <a href="https://maple2085.github.io/txt-splitter/" target="_blank">
-              <i class="fa-solid fa-rocket"></i> 入口A（GitHub Pages）
-            </a>
-            <a href="https://txt-splitter.vercel.app/" target="_blank">
-              <i class="fa-solid fa-globe"></i> 入口B（Vercel）
-            </a>
-          </div>
-        </div>
+      <p class="bio a a2">
+        <span id="typed"></span><span class="blink"></span>
+      </p>
+
+      <div class="social a a3">
+        <a href="https://github.com/Maple2085" target="_blank" rel="noopener noreferrer" class="sb" aria-label="GitHub">
+          <i class="fa-brands fa-github"></i>
+        </a>
+        <a href="https://twitter.com/NLQFgzs" target="_blank" rel="noopener noreferrer" class="sb"
+          aria-label="Twitter / X">
+          <i class="fa-brands fa-x-twitter"></i>
+        </a>
+        <a href="https://b23.tv/vhu1ny9" target="_blank" rel="noopener noreferrer" class="sb" aria-label="Bilibili">
+          <i class="fa-brands fa-bilibili"></i>
+        </a>
       </div>
+    </section>
+
+    <div class="cards a a4">
+      <a href="posts.html" class="card" aria-label="帖子与文章">
+        <div class="card-icon"><i class="fa-regular fa-file-lines"></i></div>
+        <div class="card-label">Blog</div>
+        <div class="card-title">帖子 &amp;<br>文章</div>
+        <div class="card-desc">教程、记录、折腾笔记，各种瞎搞的输出都在这。</div>
+        <div class="card-cta">去看看 <i class="fa-solid fa-arrow-right"></i></div>
+      </a>
+
+      <a href="programs.html" class="card" aria-label="我的程序">
+        <div class="card-icon"><i class="fa-solid fa-code"></i></div>
+        <div class="card-label">Projects</div>
+        <div class="card-title">我的<br>程序</div>
+        <div class="card-desc">写过的工具和小玩意，开源为主，能用就行。</div>
+        <div class="card-cta">查看项目 <i class="fa-solid fa-arrow-right"></i></div>
+      </a>
     </div>
+
+    <footer class="ft a a5">© 2026 Maple2085 · 技术小白 · AI指令工具人</footer>
   </div>
 
   <script>
-    // 弹窗控制 - 新动画逻辑
-    function showProjects() {
-      const modal = document.getElementById('projectModal');
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
+    // ── Cursor ──
+    const cur = document.getElementById('cur');
+    const curR = document.getElementById('cur-r');
+    let rx = 0, ry = 0, cx = 0, cy = 0;
+    document.addEventListener('mousemove', e => {
+      cx = e.clientX; cy = e.clientY;
+      cur.style.left = cx + 'px'; cur.style.top = cy + 'px';
+    });
+    (function loop() {
+      rx += (cx - rx) * .12; ry += (cy - ry) * .12;
+      curR.style.left = rx + 'px'; curR.style.top = ry + 'px';
+      requestAnimationFrame(loop);
+    })();
 
-    function closeProjects() {
-      const modal = document.getElementById('projectModal');
-      modal.classList.remove('active');
-
-      // 等待动画结束后恢复滚动
-      setTimeout(() => {
-        document.body.style.overflow = 'auto';
-      }, 400);
-    }
-
-    function closeProjectsOnOverlay(event) {
-      if (event.target === event.currentTarget) {
-        closeProjects();
-      }
-    }
-
-    // ESC 键关闭
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeProjects();
-      }
+    // ── Card 3D tilt + shine + ripple ──
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const x = e.clientX - r.left, y = e.clientY - r.top;
+        const cx = r.width / 2, cy = r.height / 2;
+        card.style.transform = `perspective(900px) rotateX(${((y - cy) / cy) * -7}deg) rotateY(${((x - cx) / cx) * 7}deg) translateY(-5px)`;
+        card.style.setProperty('--mx', (x / r.width * 100) + '%');
+        card.style.setProperty('--my', (y / r.height * 100) + '%');
+      });
+      card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+      card.addEventListener('click', e => {
+        const r = card.getBoundingClientRect();
+        const rip = document.createElement('span');
+        rip.className = 'rip';
+        const s = Math.max(r.width, r.height);
+        rip.style.cssText = `width:${s}px;height:${s}px;left:${e.clientX - r.left - s / 2}px;top:${e.clientY - r.top - s / 2}px`;
+        card.appendChild(rip);
+        setTimeout(() => rip.remove(), 700);
+      });
     });
 
-  </script>
+    // ── Background parallax ──
+    document.addEventListener('mousemove', e => {
+      const xp = (e.clientX / innerWidth - .5) * 28;
+      const yp = (e.clientY / innerHeight - .5) * 28;
+      document.querySelector('.o1').style.transform = `translate(${xp * .55}px,${yp * .55}px)`;
+      document.querySelector('.o2').style.transform = `translate(${-xp * .38}px,${-yp * .38}px)`;
+      document.querySelector('.o3').style.transform = `translate(${xp * .75}px,${yp * .75}px)`;
+    });
 
+    // ── Typewriter ──
+    const txt = '技术小白 · AI指令工具人';
+    const el = document.getElementById('typed');
+    let i = 0;
+    function type() {
+      if (i <= txt.length) { el.textContent = txt.slice(0, i++); setTimeout(type, i === 1 ? 700 : 65); }
+    }
+    setTimeout(type, 550);
+  </script>
 </body>
 
 </html>

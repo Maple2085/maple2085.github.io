@@ -1,398 +1,199 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="maple-theme">
 <head>
   <meta charset="UTF-8" />
   <title>帖子 & 文章 — Maple2085</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Maple2085 的帖子与文章列表" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdn.imsyy.top/gh/imsyy/file/font/HarmonyOS_Sans/regular.min.css" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: "HarmonyOS Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      min-height: 100vh;
-      background: url("./img/background.jpg") center/cover no-repeat fixed;
-      padding: 40px 20px;
-      color: #222;
+    :root{
+      --cream:#f7f5f0;
+      --blue-0:#e8f2ff;--blue-1:#c8deff;--blue-2:#93bcff;--blue-3:#5b9bff;--blue-4:#2563eb;
+      --frost:rgba(245,248,255,.72);--frost2:rgba(255,255,255,.55);
+      --border:rgba(180,210,255,.45);
+      --text-1:#0f1623;--text-2:#3a4a6b;--text-3:#7a8fb5;
+      --shadow-sm:0 2px 12px rgba(50,100,200,.08);
+      --shadow-md:0 8px 40px rgba(50,100,200,.13);
+      --shadow-lg:0 24px 80px rgba(50,100,200,.20);
+      --radius:24px;
+      --font-d:'Syne','HarmonyOS Sans',sans-serif;
+      --font-b:'HarmonyOS Sans',-apple-system,sans-serif;
     }
-
-    /* ===== 顶部导航 ===== */
-    .top-nav {
-      max-width: 1100px;
-      margin: 0 auto 32px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .back-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 20px;
-      background: rgba(255,255,255,0.3);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.4);
-      border-radius: 50px;
-      color: #333;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      transition: all 0.3s;
-    }
-
-    .back-btn:hover {
-      background: rgba(255,255,255,0.6);
-      transform: translateX(-3px);
-    }
-
-    .page-title {
-      font-size: 26px;
-      font-weight: 700;
-      color: #222;
-      letter-spacing: -0.5px;
-      text-shadow: 0 1px 8px rgba(255,255,255,0.5);
-    }
-
-    /* ===== 筛选标签 ===== */
-    .filter-bar {
-      max-width: 1100px;
-      margin: 0 auto 28px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .filter-tag {
-      padding: 7px 18px;
-      border-radius: 50px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      border: 1px solid rgba(255,255,255,0.4);
-      background: rgba(255,255,255,0.25);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      color: #444;
-      transition: all 0.25s;
-      user-select: none;
-    }
-
-    .filter-tag:hover {
-      background: rgba(255,255,255,0.55);
-    }
-
-    .filter-tag.active {
-      background: rgba(255, 126, 126, 0.85);
-      color: #fff;
-      border-color: rgba(255,126,126,0.6);
-    }
-
-    /* ===== 帖子网格 ===== */
-    .posts-grid {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
-    }
-
-    /* ===== 帖子卡片 ===== */
-    .post-card {
-      background: rgba(255,255,255,0.28);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.45);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-      overflow: hidden;
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
-      cursor: pointer;
-    }
-
-    .post-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.18);
-    }
-
-    .post-card.hidden {
-      display: none;
-    }
-
-    /* 封面图 */
-    .post-cover {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      display: block;
-      background: linear-gradient(135deg, rgba(255,200,200,0.4), rgba(200,200,255,0.4));
-    }
-
-    .post-cover-placeholder {
-      width: 100%;
-      height: 180px;
-      background: linear-gradient(135deg, rgba(255,200,200,0.35), rgba(180,200,255,0.35));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(100,100,120,0.5);
-      font-size: 36px;
-    }
-
-    /* 卡片内容 */
-    .post-body {
-      padding: 20px 22px 22px;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      gap: 10px;
-    }
-
-    /* 标签行 */
-    .post-tags {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .post-tag {
-      font-size: 11px;
-      font-weight: 600;
-      padding: 3px 10px;
-      border-radius: 50px;
-      background: rgba(255,126,126,0.15);
-      color: #c0504a;
-      letter-spacing: 0.03em;
-    }
-
-    /* 标题 */
-    .post-title {
-      font-size: 17px;
-      font-weight: 700;
-      color: #1a1a1a;
-      line-height: 1.4;
-      letter-spacing: -0.3px;
-    }
-
-    /* 摘要 */
-    .post-summary {
-      font-size: 13px;
-      color: #555;
-      line-height: 1.7;
-      flex: 1;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    /* 底部日期 + 箭头 */
-    .post-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 4px;
-    }
-
-    .post-date {
-      font-size: 12px;
-      color: #888;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .post-arrow {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #555;
-      font-size: 12px;
-      transition: all 0.3s;
-    }
-
-    .post-card:hover .post-arrow {
-      background: rgba(255,126,126,0.9);
-      color: #fff;
-      transform: translateX(3px);
-    }
-
-    /* ===== 空状态 ===== */
-    .empty-state {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 60px 20px;
-      color: rgba(80,80,100,0.6);
-      font-size: 15px;
-    }
-
-    .empty-state i {
-      font-size: 40px;
-      margin-bottom: 12px;
-      display: block;
-      opacity: 0.4;
-    }
-
-    /* ===== 加载错误 ===== */
-    .load-error {
-      max-width: 1100px;
-      margin: 0 auto;
-      text-align: center;
-      padding: 80px 20px;
-      color: rgba(80,80,100,0.7);
-    }
-
-    /* ===== 入场动画 ===== */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .post-card {
-      animation: fadeInUp 0.4s ease both;
-    }
-
-    /* ===== 响应式 ===== */
-    @media (max-width: 700px) {
-      .posts-grid { grid-template-columns: 1fr; }
-      .page-title { font-size: 20px; }
-    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:var(--font-b);background:var(--cream);color:var(--text-1);min-height:100vh;overflow-x:hidden;cursor:none}
+    #cur{position:fixed;width:10px;height:10px;background:var(--blue-4);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;mix-blend-mode:multiply}
+    #cur-r{position:fixed;width:34px;height:34px;border:1.5px solid rgba(37,99,235,.35);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .35s cubic-bezier(.23,1,.32,1),height .35s}
+    body:has(.post-card:hover) #cur{width:18px;height:18px;background:var(--blue-3)}
+    body:has(.post-card:hover) #cur-r{width:52px;height:52px;border-color:rgba(91,155,255,.45)}
+    .bg{position:fixed;inset:0;z-index:0;background:var(--cream);overflow:hidden}
+    .orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.48;will-change:transform}
+    .o1{width:680px;height:680px;background:radial-gradient(circle,#bbd4ff 0%,transparent 70%);top:-160px;left:-120px;animation:o1 20s ease-in-out infinite alternate}
+    .o2{width:520px;height:520px;background:radial-gradient(circle,#cce2ff 0%,transparent 70%);bottom:-80px;right:-60px;animation:o2 25s ease-in-out infinite alternate}
+    .o3{width:360px;height:360px;background:radial-gradient(circle,#ddeeff 0%,transparent 70%);top:50%;left:55%;animation:o3 15s ease-in-out infinite alternate}
+    .bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(140,185,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(140,185,255,.06) 1px,transparent 1px);background-size:64px 64px}
+    @keyframes o1{to{transform:translate(70px,60px) scale(1.1)}}
+    @keyframes o2{to{transform:translate(-60px,-70px) scale(1.15)}}
+    @keyframes o3{to{transform:translate(-80px,50px) scale(.9)}}
+    .page{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding:52px 24px 80px}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px);filter:blur(6px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+    .a{opacity:0;animation:fadeUp .7s cubic-bezier(.22,1,.36,1) forwards}
+    .a1{animation-delay:.05s}.a2{animation-delay:.15s}.a3{animation-delay:.25s}.a4{animation-delay:.36s}
+    .stagger{opacity:0}
+    .stagger.visible{animation:fadeUp .65s cubic-bezier(.22,1,.36,1) forwards}
+    .nav{display:flex;align-items:center;gap:16px;margin-bottom:52px}
+    .back{display:flex;align-items:center;gap:8px;padding:11px 22px;background:var(--frost);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:50px;color:var(--text-2);text-decoration:none;font-size:14px;font-weight:500;box-shadow:var(--shadow-sm);transition:transform .3s cubic-bezier(.34,1.56,.64,1),background .3s,box-shadow .3s;cursor:none}
+    .back:hover{transform:translateX(-5px);background:white;box-shadow:var(--shadow-md)}
+    .hdr{margin-bottom:40px}
+    .hdr-eyebrow{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue-3);margin-bottom:10px}
+    .hdr-title{font-family:var(--font-d);font-size:clamp(36px,6vw,60px);font-weight:800;letter-spacing:-2px;line-height:1.05;background:linear-gradient(140deg,var(--text-1) 25%,var(--blue-4));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px}
+    .hdr-sub{font-size:15px;color:var(--text-3);line-height:1.65}
+    .filter-bar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:36px}
+    .ftag{padding:8px 20px;border-radius:50px;font-size:13px;font-weight:500;cursor:none;border:1px solid var(--border);background:var(--frost);backdrop-filter:blur(12px);color:var(--text-2);transition:transform .3s cubic-bezier(.34,1.56,.64,1),background .25s,box-shadow .25s,color .25s,border-color .25s;user-select:none}
+    .ftag:hover{transform:translateY(-2px);background:white;box-shadow:var(--shadow-sm)}
+    .ftag.active{background:var(--blue-4);color:white;border-color:transparent;box-shadow:0 4px 20px rgba(37,99,235,.3)}
+    .ftag.active:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,99,235,.38)}
+    .posts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
+    .post-card{background:var(--frost);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-md);overflow:hidden;text-decoration:none;color:var(--text-1);display:flex;flex-direction:column;position:relative;transition:transform .45s cubic-bezier(.23,1,.32,1),box-shadow .45s,border-color .3s;transform-style:preserve-3d;will-change:transform;cursor:none}
+    .post-card::before{content:'';position:absolute;inset:0;background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(140,195,255,.18),transparent 55%);opacity:0;transition:opacity .3s;pointer-events:none;border-radius:inherit;z-index:0}
+    .post-card:hover::before{opacity:1}
+    .post-card::after{content:'';position:absolute;top:0;left:24px;right:24px;height:1.5px;background:linear-gradient(90deg,transparent,var(--blue-2),transparent);opacity:0;transition:opacity .3s}
+    .post-card:hover::after{opacity:1}
+    .post-card:hover{box-shadow:var(--shadow-lg);border-color:rgba(140,195,255,.65)}
+    .post-cover-wrap{overflow:hidden;height:190px;position:relative;z-index:1}
+    .post-cover{width:100%;height:190px;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.23,1,.32,1)}
+    .post-card:hover .post-cover{transform:scale(1.05)}
+    .post-cover-ph{width:100%;height:190px;background:linear-gradient(135deg,var(--blue-0),var(--blue-1) 50%,#d5e9ff);display:flex;align-items:center;justify-content:center;font-size:46px;color:var(--blue-3);position:relative}
+    .post-cover-ph::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.25) 0%,transparent 60%)}
+    .post-body{padding:22px 24px 24px;display:flex;flex-direction:column;flex:1;gap:9px;position:relative;z-index:1}
+    .post-tags{display:flex;gap:6px;flex-wrap:wrap}
+    .post-tag{font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:50px;background:rgba(37,99,235,.1);color:var(--blue-4);letter-spacing:.5px}
+    .post-title{font-family:var(--font-d);font-size:18px;font-weight:700;color:var(--text-1);line-height:1.35;letter-spacing:-.3px}
+    .post-summary{font-size:13px;color:var(--text-3);line-height:1.7;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .post-footer{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+    .post-date{font-size:12px;color:var(--text-3);display:flex;align-items:center;gap:5px}
+    .post-arrow{width:32px;height:32px;border-radius:50%;background:var(--frost2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-3);font-size:12px;transition:transform .35s cubic-bezier(.34,1.56,.64,1),background .3s,color .3s,border-color .3s}
+    .post-card:hover .post-arrow{transform:translateX(4px);background:var(--blue-4);color:white;border-color:transparent}
+    .rip{position:absolute;border-radius:50%;background:rgba(91,155,255,.2);transform:scale(0);animation:rip .65s linear;pointer-events:none;z-index:2}
+    @keyframes rip{to{transform:scale(4);opacity:0}}
+    .empty{grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--text-3)}
+    .empty i{font-size:44px;margin-bottom:16px;display:block;opacity:.35}
+    .load-err{text-align:center;padding:100px 20px;color:var(--text-3)}
+    .load-err i{font-size:44px;margin-bottom:16px;display:block;opacity:.3}
+    @media(max-width:640px){.posts-grid{grid-template-columns:1fr}.hdr-title{letter-spacing:-1px}}
   </style>
+  <link rel="stylesheet" href="assets/maple-theme.css" />
 </head>
 <body>
-
-  <!-- 顶部导航 -->
-  <nav class="top-nav">
-    <a href="index.html" class="back-btn">
-      <i class="fa-solid fa-arrow-left"></i> 返回主页
-    </a>
-    <h1 class="page-title">帖子 & 文章</h1>
-  </nav>
-
-  <!-- 标签筛选栏（由 JS 动态生成） -->
-  <div class="filter-bar" id="filterBar"></div>
-
-  <!-- 帖子网格（由 JS 动态生成） -->
-  <div class="posts-grid" id="postsGrid"></div>
-
+  <div id="cur"></div>
+  <div id="cur-r"></div>
+  <div class="bg">
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="orb o3"></div>
+    <div class="bg-grid"></div>
+  </div>
+  <div class="page">
+    <nav class="nav a a1">
+      <a href="index.html" class="back" aria-label="返回主页">
+        <i class="fa-solid fa-arrow-left"></i> 返回主页
+      </a>
+    </nav>
+    <header class="hdr">
+      <div class="hdr-eyebrow a a1">Blog</div>
+      <h1 class="hdr-title a a2">帖子 &amp; 文章</h1>
+      <p class="hdr-sub a a3">教程、记录、折腾笔记，各种瞎搞的输出都在这。</p>
+    </header>
+    <div class="filter-bar a a4" id="filterBar"></div>
+    <div class="posts-grid" id="postsGrid"></div>
+  </div>
   <script>
-    let allPosts = [];
-    let activeTag = '全部';
-
-    // 加载 posts.json
-    async function loadPosts() {
-      const grid = document.getElementById('postsGrid');
-      try {
-        const res = await fetch('posts/posts.json');
-        if (!res.ok) throw new Error('加载失败');
-        allPosts = await res.json();
-        buildFilterBar();
-        renderPosts(allPosts);
-      } catch (e) {
-        grid.innerHTML = `
-          <div class="load-error">
-            <i class="fa-regular fa-folder-open" style="font-size:40px;opacity:0.4;display:block;margin-bottom:12px;"></i>
-            <div>未能加载帖子列表</div>
-            <div style="font-size:12px;margin-top:6px;opacity:0.6;">请确保 posts/posts.json 存在</div>
-          </div>`;
+    const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
+    let rx=0,ry=0,cx=0,cy=0;
+    document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;cur.style.left=cx+'px';cur.style.top=cy+'px';});
+    (function loop(){rx+=(cx-rx)*.12;ry+=(cy-ry)*.12;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop)})();
+    document.addEventListener('mousemove',e=>{
+      const xp=(e.clientX/innerWidth-.5)*26,yp=(e.clientY/innerHeight-.5)*26;
+      document.querySelector('.o1').style.transform=`translate(${xp*.55}px,${yp*.55}px)`;
+      document.querySelector('.o2').style.transform=`translate(${-xp*.4}px,${-yp*.4}px)`;
+      document.querySelector('.o3').style.transform=`translate(${xp*.7}px,${yp*.7}px)`;
+    });
+    function bindCard(card){
+      card.addEventListener('mousemove',e=>{
+        const r=card.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
+        card.style.transform=`perspective(900px) rotateX(${((y-r.height/2)/r.height)*-6}deg) rotateY(${((x-r.width/2)/r.width)*6}deg) translateY(-5px)`;
+        card.style.setProperty('--mx',(x/r.width*100)+'%');
+        card.style.setProperty('--my',(y/r.height*100)+'%');
+      });
+      card.addEventListener('mouseleave',()=>{card.style.transform='';});
+      card.addEventListener('click',e=>{
+        const r=card.getBoundingClientRect(),rip=document.createElement('span');
+        rip.className='rip';const s=Math.max(r.width,r.height);
+        rip.style.cssText=`width:${s}px;height:${s}px;left:${e.clientX-r.left-s/2}px;top:${e.clientY-r.top-s/2}px`;
+        card.appendChild(rip);setTimeout(()=>rip.remove(),700);
+      });
+    }
+    const obs=new IntersectionObserver(entries=>{
+      entries.forEach(en=>{if(en.isIntersecting){setTimeout(()=>en.target.classList.add('visible'),+(en.target.dataset.delay||0));obs.unobserve(en.target);}});
+    },{threshold:.1});
+    let allPosts=[],activeTag='全部';
+    async function loadPosts(){
+      const grid=document.getElementById('postsGrid');
+      try{
+        const res=await fetch('posts/posts.json');
+        if(!res.ok)throw new Error();
+        allPosts=await res.json();
+        buildFilterBar();renderPosts(allPosts);
+      }catch(e){
+        grid.innerHTML=`<div class="load-err"><i class="fa-regular fa-folder-open"></i><div style="font-family:var(--font-d);font-size:18px;font-weight:600;color:var(--text-2);margin-bottom:6px">暂无内容</div><div style="font-size:13px">请确保 posts/posts.json 存在且格式正确</div></div>`;
       }
     }
-
-    // 收集所有标签并生成筛选栏
-    function buildFilterBar() {
-      const bar = document.getElementById('filterBar');
-      const tagSet = new Set();
-      allPosts.forEach(p => (p.tags || []).forEach(t => tagSet.add(t)));
-      const tags = ['全部', ...tagSet];
-      bar.innerHTML = '';
-      tags.forEach(tag => {
-        const el = document.createElement('span');
-        el.className = 'filter-tag' + (tag === '全部' ? ' active' : '');
-        el.textContent = tag;
-        el.addEventListener('click', () => {
-          activeTag = tag;
-          document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+    function buildFilterBar(){
+      const bar=document.getElementById('filterBar');
+      const tags=new Set();
+      allPosts.forEach(p=>(p.tags||[]).forEach(t=>tags.add(t)));
+      ['全部',...tags].forEach(tag=>{
+        const el=document.createElement('span');
+        el.className='ftag'+(tag==='全部'?' active':'');
+        el.textContent=tag;
+        el.addEventListener('click',()=>{
+          activeTag=tag;
+          document.querySelectorAll('.ftag').forEach(t=>t.classList.remove('active'));
           el.classList.add('active');
-          filterPosts();
+          renderPosts(tag==='全部'?allPosts:allPosts.filter(p=>(p.tags||[]).includes(tag)));
         });
         bar.appendChild(el);
       });
     }
-
-    // 筛选帖子
-    function filterPosts() {
-      const filtered = activeTag === '全部'
-        ? allPosts
-        : allPosts.filter(p => (p.tags || []).includes(activeTag));
-      renderPosts(filtered);
-    }
-
-    // 渲染帖子卡片
-    function renderPosts(posts) {
-      const grid = document.getElementById('postsGrid');
-      grid.innerHTML = '';
-
-      if (posts.length === 0) {
-        grid.innerHTML = `
-          <div class="empty-state">
-            <i class="fa-regular fa-file"></i>
-            该分类暂无帖子
-          </div>`;
+    function renderPosts(posts){
+      const grid=document.getElementById('postsGrid');
+      grid.innerHTML='';
+      if(!posts.length){
+        grid.innerHTML=`<div class="empty"><i class="fa-regular fa-file"></i><div style="font-family:var(--font-d);font-size:18px;font-weight:600;color:var(--text-2);margin-bottom:6px">该分类暂无帖子</div><div style="font-size:13px;opacity:.7">换个标签试试？</div></div>`;
         return;
       }
-
-      posts.forEach((post, i) => {
-        const card = document.createElement('a');
-        card.className = 'post-card';
-        card.href = `posts/${post.id}.html`;
-        card.style.animationDelay = `${i * 0.07}s`;
-
-        const tagsHtml = (post.tags || [])
-          .map(t => `<span class="post-tag">${t}</span>`)
-          .join('');
-
-        const coverHtml = post.cover
-          ? `<img class="post-cover" src="posts/${post.cover}" alt="${post.title}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-             <div class="post-cover-placeholder" style="display:none"><i class="fa-regular fa-image"></i></div>`
-          : `<div class="post-cover-placeholder"><i class="fa-regular fa-image"></i></div>`;
-
-        const dateStr = post.date
-          ? new Date(post.date).toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })
-          : '';
-
-        card.innerHTML = `
-          ${coverHtml}
-          <div class="post-body">
-            <div class="post-tags">${tagsHtml}</div>
-            <div class="post-title">${post.title}</div>
-            <div class="post-summary">${post.summary || ''}</div>
-            <div class="post-footer">
-              <span class="post-date">
-                <i class="fa-regular fa-calendar"></i> ${dateStr}
-              </span>
-              <span class="post-arrow">
-                <i class="fa-solid fa-arrow-right"></i>
-              </span>
-            </div>
-          </div>`;
-
-        grid.appendChild(card);
+      posts.forEach((post,i)=>{
+        const card=document.createElement('a');
+        card.className='post-card stagger';
+        card.href=`posts/${post.id}.html`;
+        card.dataset.delay=i*80;
+        const coverHtml=post.cover
+          ?`<div class="post-cover-wrap"><img class="post-cover" src="posts/${post.cover}" alt="${post.title}" loading="lazy"></div>`
+          :`<div class="post-cover-ph"><i class="fa-regular fa-image"></i></div>`;
+        const tagsHtml=(post.tags||[]).map(t=>`<span class="post-tag">${t}</span>`).join('');
+        const dateStr=post.date?new Date(post.date).toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric'}):'';
+        card.innerHTML=`${coverHtml}<div class="post-body">${tagsHtml?`<div class="post-tags">${tagsHtml}</div>`:''}<div class="post-title">${post.title}</div><div class="post-summary">${post.summary||''}</div><div class="post-footer"><span class="post-date"><i class="fa-regular fa-calendar"></i> ${dateStr}</span><span class="post-arrow"><i class="fa-solid fa-arrow-right"></i></span></div></div>`;
+        const cover=card.querySelector('.post-cover');
+        if(cover)cover.addEventListener('error',()=>{cover.parentElement.outerHTML='<div class="post-cover-ph"><i class="fa-regular fa-image"></i></div>';});
+        grid.appendChild(card);obs.observe(card);bindCard(card);
       });
     }
-
-    document.addEventListener('DOMContentLoaded', loadPosts);
+    document.addEventListener('DOMContentLoaded',loadPosts);
   </script>
-
+  <script src="assets/maple-theme.js"></script>
 </body>
 </html>

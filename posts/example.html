@@ -1,262 +1,223 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="maple-theme">
 <head>
   <meta charset="UTF-8" />
-  <title>帖子标题 — Maple2085</title>
+  <!-- 修改点 1：文章的标签页标题 -->
+  <title>发帖完全指南：如何写出一篇完美的文章 — Maple2085</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+  
+  <!-- 引入字体与图标库 -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.imsyy.top/gh/imsyy/file/font/HarmonyOS_Sans/regular.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  
   <style>
+    /* ========== 全局样式变量 ========== */
+    :root {
+      --bg-color: #FAFAFA;
+      --text-main: #1A1A1D;
+      --text-sub: #666666;
+      --glass-bg: rgba(255, 255, 255, 0.6);
+      --glass-border: rgba(255, 255, 255, 0.8);
+      --blob-1: #A8C0FF; --blob-2: #E2B0FF; --blob-3: #96E6A1;
+      --accent: #667EEA;
+      --accent-light: rgba(102, 126, 234, 0.1);
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: "HarmonyOS Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      min-height: 100vh;
-      background: url("../img/background.jpg") center/cover no-repeat fixed;
-      padding: 40px 20px;
-      color: #222;
+    body { 
+      font-family: "HarmonyOS Sans", -apple-system, sans-serif; 
+      background-color: var(--bg-color); color: var(--text-main); 
+      min-height: 100vh; overflow-x: hidden; 
     }
 
-    /* ===== 顶部导航 ===== */
-    .top-nav {
-      max-width: 780px;
-      margin: 0 auto 28px;
-      display: flex;
-      gap: 10px;
+    /* ========== 纯 CSS 背景光晕 ========== */
+    .mesh-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; }
+    .color-blob { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.6; animation: float 20s infinite alternate ease-in-out; }
+    .blob-1 { width: 60vw; height: 60vw; background: var(--blob-1); top: -10%; left: -10%; animation-delay: 0s; }
+    .blob-2 { width: 50vw; height: 50vw; background: var(--blob-2); bottom: -10%; right: -10%; animation-delay: -5s; animation-duration: 25s; }
+    .blob-3 { width: 40vw; height: 40vw; background: var(--blob-3); top: 40%; left: 30%; animation-delay: -10s; animation-duration: 30s; }
+    @keyframes float { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(-10%, -10%) scale(0.9); } }
+
+    /* ========== 布局与容器 ========== */
+    .container { 
+      max-width: 900px; margin: 0 auto; padding: 40px 20px; z-index: 1; 
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; 
+    }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* 顶部导航 */
+    .top-nav { margin-bottom: 30px; }
+    .back-btn { 
+      display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; 
+      background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); 
+      border-radius: 50px; color: var(--text-main); text-decoration: none; font-weight: 600; 
+      transition: all 0.3s; 
+    }
+    .back-btn:hover { background: #fff; transform: translateX(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+
+    /* 玻璃态内容面板 */
+    .article-glass {
+      background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--glass-border); border-radius: 32px; padding: 60px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.9);
     }
 
-    .nav-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 20px;
-      background: rgba(255,255,255,0.3);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.4);
-      border-radius: 50px;
-      color: #333;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      transition: all 0.3s;
+    /* ========== 头部信息 (标题/日期/标签) ========== */
+    .article-header { border-bottom: 2px solid rgba(0,0,0,0.05); padding-bottom: 30px; margin-bottom: 40px; }
+    .title { font-family: 'Syne', "HarmonyOS Sans", sans-serif; font-size: 46px; font-weight: 800; line-height: 1.2; letter-spacing: -1px; margin-bottom: 16px; }
+    .meta { display: flex; gap: 16px; color: var(--text-sub); font-size: 14px; align-items: center; flex-wrap: wrap;}
+    .tag { background: rgba(0,0,0,0.05); padding: 4px 12px; border-radius: 50px; font-weight: 700; color: var(--text-main); }
+
+    /* ========== 核心内容排版区 (.prose) ========== */
+    /* 所有的正文内容都被包裹在 .prose 这个 class 里面，它自动实现了顶级大厂的排版美学 */
+    .prose { font-size: 17px; line-height: 1.8; color: #333; }
+    .prose p { margin-bottom: 1.5em; }
+    
+    /* 标题排版 */
+    .prose h2 { font-size: 28px; font-weight: 700; margin: 2em 0 1em; color: var(--text-main); letter-spacing: -0.5px; }
+    .prose h3 { font-size: 22px; font-weight: 700; margin: 1.5em 0 0.8em; color: var(--text-main); }
+    
+    /* 链接排版：精美的下划线效果 */
+    .prose a { color: var(--accent); text-decoration: none; font-weight: 600; border-bottom: 2px solid var(--accent-light); transition: all 0.3s; }
+    .prose a:hover { border-bottom-color: var(--accent); background-color: var(--accent-light); }
+    
+    /* 列表排版 */
+    .prose ul, .prose ol { margin-bottom: 1.5em; padding-left: 24px; }
+    .prose li { margin-bottom: 0.5em; }
+    .prose li::marker { color: var(--accent); font-weight: bold; }
+    
+    /* 行内强调与行内代码 */
+    .prose strong { font-weight: 700; color: var(--text-main); }
+    .prose code { background: rgba(0,0,0,0.06); padding: 3px 6px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: #E83E8C; }
+    
+    /* 大块引用 (Blockquote) */
+    .prose blockquote {
+      border-left: 4px solid var(--accent); background: var(--accent-light);
+      padding: 16px 24px; margin: 0 0 1.5em; border-radius: 0 12px 12px 0;
+      color: var(--text-sub); font-style: italic;
+    }
+    
+    /* 图片排版 */
+    .prose img { max-width: 100%; height: auto; border-radius: 16px; margin: 1.5em 0; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05); }
+    
+    /* 极致丝滑的代码块 */
+    .prose pre {
+      background: #F4F5F7; border: 1px solid rgba(0,0,0,0.05); border-radius: 16px;
+      padding: 24px; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 14px;
+      line-height: 1.6; margin-bottom: 1.5em; position: relative; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
     }
 
-    .nav-btn:hover {
-      background: rgba(255,255,255,0.6);
+    /* 警告/高亮提示框 (自定义组件) */
+    .alert-box {
+      background: rgba(255, 126, 126, 0.1); border: 1px solid rgba(255, 126, 126, 0.3);
+      border-radius: 12px; padding: 16px 20px; margin-bottom: 1.5em; display: flex; gap: 12px;
     }
-
-    .nav-btn.back:hover { transform: translateX(-3px); }
-
-    /* ===== 文章主体卡片 ===== */
-    .article-card {
-      max-width: 780px;
-      margin: 0 auto;
-      background: rgba(255,255,255,0.3);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border-radius: 24px;
-      border: 1px solid rgba(255,255,255,0.45);
-      box-shadow: 0 8px 40px rgba(0,0,0,0.13);
-      overflow: hidden;
-      animation: fadeInUp 0.4s ease both;
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* 封面 */
-    .article-cover {
-      width: 100%;
-      max-height: 340px;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* 文章信息区 */
-    .article-header {
-      padding: 32px 40px 24px;
-      border-bottom: 1px solid rgba(255,255,255,0.3);
-    }
-
-    .article-tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 14px;
-    }
-
-    .article-tag {
-      font-size: 11px;
-      font-weight: 600;
-      padding: 4px 12px;
-      border-radius: 50px;
-      background: rgba(255,126,126,0.15);
-      color: #c0504a;
-    }
-
-    .article-title {
-      font-size: 28px;
-      font-weight: 700;
-      color: #1a1a1a;
-      line-height: 1.35;
-      letter-spacing: -0.5px;
-      margin-bottom: 12px;
-    }
-
-    .article-meta {
-      font-size: 13px;
-      color: #888;
-      display: flex;
-      gap: 18px;
-    }
-
-    .article-meta span {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    /* 正文区 */
-    .article-body {
-      padding: 32px 40px 40px;
-      font-size: 15px;
-      line-height: 1.9;
-      color: #333;
-    }
-
-    /* 正文排版 */
-    .article-body h2 {
-      font-size: 20px;
-      font-weight: 700;
-      color: #1a1a1a;
-      margin: 28px 0 12px;
-      padding-left: 12px;
-      border-left: 3px solid #ff7e7e;
-    }
-
-    .article-body h3 {
-      font-size: 16px;
-      font-weight: 700;
-      color: #222;
-      margin: 20px 0 8px;
-    }
-
-    .article-body p { margin-bottom: 16px; }
-
-    .article-body a {
-      color: #e06060;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
-    .article-body code {
-      font-family: "Courier New", monospace;
-      font-size: 13px;
-      background: rgba(0,0,0,0.06);
-      padding: 2px 7px;
-      border-radius: 5px;
-      color: #c0504a;
-    }
-
-    .article-body pre {
-      background: rgba(0,0,0,0.06);
-      border-radius: 12px;
-      padding: 18px 20px;
-      overflow-x: auto;
-      margin: 16px 0;
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    .article-body pre code {
-      background: none;
-      padding: 0;
-      color: #333;
-    }
-
-    .article-body img {
-      max-width: 100%;
-      border-radius: 12px;
-      margin: 12px 0;
-    }
-
-    .article-body ul, .article-body ol {
-      padding-left: 22px;
-      margin-bottom: 16px;
-    }
-
-    .article-body li { margin-bottom: 6px; }
-
-    .article-body blockquote {
-      margin: 16px 0;
-      padding: 14px 20px;
-      border-left: 3px solid #ff7e7e;
-      background: rgba(255,126,126,0.07);
-      border-radius: 0 10px 10px 0;
-      color: #555;
-      font-style: italic;
-    }
-
-    /* ===== 响应式 ===== */
-    @media (max-width: 600px) {
-      .article-header, .article-body { padding: 24px 22px; }
-      .article-title { font-size: 22px; }
-    }
+    .alert-box i { color: #ff7e7e; font-size: 20px; margin-top: 4px; }
+    
+    @media (max-width: 600px) { .article-glass { padding: 30px 20px; } .title { font-size: 32px; } }
   </style>
+  <link rel="stylesheet" href="../assets/maple-theme.css" />
 </head>
 <body>
 
-  <!-- 顶部导航 -->
-  <nav class="top-nav">
-    <a href="../posts.html" class="nav-btn back">
-      <i class="fa-solid fa-arrow-left"></i> 返回列表
-    </a>
-    <a href="../index.html" class="nav-btn">
-      <i class="fa-solid fa-house"></i> 主页
-    </a>
-  </nav>
+  <!-- 纯 CSS 渐变光晕背景 -->
+  <div class="mesh-bg">
+    <div class="color-blob blob-1"></div>
+    <div class="color-blob blob-2"></div>
+    <div class="color-blob blob-3"></div>
+  </div>
 
-  <!-- 文章卡片 -->
-  <article class="article-card">
-
-    <!-- 封面图（没有封面可删掉这行） -->
-    <img class="article-cover" src="covers/example.jpg" alt="封面图" onerror="this.style.display='none'">
-
-    <!-- 文章头部 -->
-    <header class="article-header">
-      <div class="article-tags">
-        <span class="article-tag">教程</span>
-        <span class="article-tag">工具</span>
-      </div>
-      <h1 class="article-title">这是帖子的标题，替换成你的内容</h1>
-      <div class="article-meta">
-        <span><i class="fa-regular fa-calendar"></i> 2025年5月1日</span>
-        <span><i class="fa-regular fa-user"></i> Maple2085</span>
-      </div>
-    </header>
-
-    <!-- 正文 —— 在这里写你的内容 -->
-    <div class="article-body">
-
-      <p>这里是帖子的开头段落，介绍文章的背景和目的。你可以直接在这里写 HTML，也可以用任何你喜欢的方式组织内容。</p>
-
-      <h2>第一部分</h2>
-      <p>这里写第一部分的正文内容。支持各种 HTML 标签。</p>
-
-      <h2>代码示例</h2>
-      <pre><code># 这是一段示例代码
-print("Hello, Maple2085!")</code></pre>
-
-      <h2>引用</h2>
-      <blockquote>这里可以放一段引用或重点提示。</blockquote>
-
-      <p>更多内容继续往下写即可……</p>
-
+  <div class="container">
+    <div class="top-nav">
+      <!-- 注意这里的 href 返回上级目录找 posts.html -->
+      <a href="../posts.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> 返回文章列表</a>
     </div>
-  </article>
 
+    <article class="article-glass">
+      <!-- ================= 头部信息区 ================= -->
+      <header class="article-header">
+        <!-- 修改点 2：文章的大标题 -->
+        <h1 class="title">发帖完全指南：如何写出一篇完美的文章</h1>
+        <div class="meta">
+          <!-- 修改点 3：文章发布日期 -->
+          <span><i class="fa-regular fa-calendar"></i> 2025-10-24</span>
+          <!-- 修改点 4：文章标签 -->
+          <span class="tag">教程</span>
+          <span class="tag">网站开发</span>
+        </div>
+      </header>
+
+      <!-- ================= 核心正文区 ================= -->
+      <!-- 所有你写的文章内容，都要放在这个 class="prose" 的 div 里面 -->
+      <div class="prose">
+        
+        <p>欢迎使用全新的 <strong>Maple2085</strong> 博客排版系统！这篇文章不仅是一篇示范，也是一份详细的使用教程。本系统采用了顶级科技公司（如 Apple、Linear）推崇的“玻璃态（Glassmorphism）”排版语言。</p>
+
+        <h2>1. 如何新建一篇文章？</h2>
+        <p>发帖的流程非常简单，完全不需要数据库，只需要操作本地文件：</p>
+        <ol>
+          <li>在 <code>posts/</code> 文件夹中，复制这个 <code>example.html</code> 文件。</li>
+          <li>将它重命名为一个有意义的短英文名字，比如：<code>my-first-post.html</code>。</li>
+          <li>用编辑器打开那个文件，修改顶部的<code>&lt;title&gt;</code>、大标题 <code>&lt;h1&gt;</code>，然后在这个 <code>&lt;div class="prose"&gt;</code> 里面畅所欲言。</li>
+        </ol>
+
+        <div class="alert-box">
+          <i class="fa-solid fa-lightbulb"></i>
+          <div>
+            <strong>提示：</strong> 不要直接在 <code>index.html</code> 里写文章！<code>posts.html</code> 会自动读取 JSON，你要做的只是写好独立的 HTML 文件。
+          </div>
+        </div>
+
+        <h2>2. 如何在首页列表里显示我的文章？</h2>
+        <p>你写好了 <code>my-first-post.html</code> 后，列表页还不知道它的存在。你需要更新 <code>posts.json</code> 索引文件。</p>
+        <p>打开 <code>posts/posts.json</code>，在里面添加一个新的 JSON 对象：</p>
+
+<!-- 这是一个代码块示例，直接用 pre 和 code 标签嵌套即可 -->
+<pre><code>{
+  "id": "my-first-post",
+  "title": "这是我的第一篇文章",
+  "tags": ["日常", "碎碎念"],
+  "date": "2025-10-25",
+  "summary": "这是显示在卡片上的简短摘要，最好控制在两句话以内。",
+  "cover": "covers/my-cover.jpg" 
+}</code></pre>
+
+        <ul>
+          <li><code>id</code>：<strong>最重要！</strong>它必须和你新建的文件名一模一样（不带 .html）。比如你的文件名是 <code>my-first-post.html</code>，这里就填 <code>my-first-post</code>。</li>
+          <li><code>cover</code>：如果不填，卡片会显示一个默认的图片图标。</li>
+          <li><code>tags</code>：可以填多个，列表页会自动根据这些标签生成“筛选按钮”。</li>
+        </ul>
+
+        <h2>3. Markdown 常见排版演示</h2>
+        <p>在这个系统里，你不需要配置复杂的 Markdown 转换器，直接写 HTML 标签就能获得顶级的视觉体验。</p>
+        
+        <h3>3.1 强调与链接</h3>
+        <p>想要重点突出，可以用 <code>&lt;strong&gt;</code> 标签加粗文字。如果涉及专业词汇，可以使用行内代码标签，比如 <code>&lt;code&gt;JavaScript&lt;/code&gt;</code> 会显示为 <code>JavaScript</code>。</p>
+        <p>如果想要插入超链接，直接写 <a href="https://github.com/Maple2085" target="_blank">枫叶的 GitHub 主页</a>，我已经为你写好了悬浮时的背景高亮特效。</p>
+
+        <h3>3.2 引用块 (Blockquote)</h3>
+        <p>如果你想引用别人的话，或者做个显眼的总结，可以用 blockquote：</p>
+        <blockquote>
+          “代码写出来是给人看的，只是恰好机器也能运行。” <br>
+          —— 某位著名的程序员
+        </blockquote>
+
+        <h3>3.3 插入图片</h3>
+        <p>直接使用 <code>img</code> 标签即可，图片会自动加上圆角和柔和的阴影，并且不会超出屏幕宽度：</p>
+        <!-- 下面是一张占位图的演示，你可以换成自己的图片 -->
+        <img src="https://images.unsplash.com/photo-1550439062-609e1531270e?q=80&w=1000&auto=format&fit=crop" alt="编程演示图">
+        <p style="text-align: center; color: var(--text-sub); font-size: 13px; margin-top: -1em; margin-bottom: 2em;">图片下方可以加一句居中的小号文字作为注释</p>
+
+        <h2>结语</h2>
+        <p>好啦！这就是在这个网站发帖的全部教程。你只要照猫画虎，复制这个模板把 <code>class="prose"</code> 里面的内容删掉换成自己的文章，就能写出极具大厂风范的极客博客了。赶紧去试试吧！</p>
+
+      </div>
+      <!-- ================= 正文区结束 ================= -->
+
+    </article>
+  </div>
+
+<script src="../assets/maple-theme.js"></script>
 </body>
 </html>
