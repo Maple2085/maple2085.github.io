@@ -460,6 +460,66 @@ html.maple-theme .prose a:hover {
   border-bottom-color: var(--blue-4);
 }
 
+html.maple-theme .btn,
+html.maple-theme .btn:visited,
+html.maple-theme .btn:hover,
+html.maple-theme .btn:focus-visible,
+html.maple-theme .prose a.btn,
+html.maple-theme .prose a.btn:visited,
+html.maple-theme .prose a.btn:hover,
+html.maple-theme .prose a.btn:focus-visible,
+html.maple-theme .btn-primary,
+html.maple-theme .btn-primary:visited,
+html.maple-theme .btn-primary:hover,
+html.maple-theme .btn-primary:focus-visible,
+html.maple-theme .prose a.btn-primary,
+html.maple-theme .prose a.btn-primary:visited,
+html.maple-theme .prose a.btn-primary:hover,
+html.maple-theme .prose a.btn-primary:focus-visible,
+html.maple-theme .plink-primary,
+html.maple-theme .plink-primary:visited,
+html.maple-theme .plink-primary:hover,
+html.maple-theme .plink-primary:focus-visible {
+  background: var(--blue-4);
+  color: white !important;
+  border-color: transparent;
+  border-bottom-color: transparent !important;
+}
+
+html.maple-theme .btn:hover,
+html.maple-theme .prose a.btn:hover,
+html.maple-theme .btn-primary:hover,
+html.maple-theme .prose a.btn-primary:hover,
+html.maple-theme .plink-primary:hover {
+  background: var(--blue-3);
+}
+
+html.maple-theme .btn.secondary,
+html.maple-theme .btn.secondary:visited,
+html.maple-theme .btn.secondary:hover,
+html.maple-theme .btn.secondary:focus-visible,
+html.maple-theme .prose a.btn.secondary,
+html.maple-theme .prose a.btn.secondary:visited,
+html.maple-theme .prose a.btn.secondary:hover,
+html.maple-theme .prose a.btn.secondary:focus-visible,
+html.maple-theme .btn-secondary,
+html.maple-theme .btn-secondary:visited,
+html.maple-theme .btn-secondary:hover,
+html.maple-theme .btn-secondary:focus-visible,
+html.maple-theme .prose a.btn-secondary,
+html.maple-theme .prose a.btn-secondary:visited,
+html.maple-theme .prose a.btn-secondary:hover,
+html.maple-theme .prose a.btn-secondary:focus-visible,
+html.maple-theme .plink:not(.plink-primary),
+html.maple-theme .plink:not(.plink-primary):visited,
+html.maple-theme .plink:not(.plink-primary):hover,
+html.maple-theme .plink:not(.plink-primary):focus-visible {
+  background: white;
+  color: var(--blue-4) !important;
+  border-color: var(--border);
+  border-bottom-color: var(--border) !important;
+}
+
 html.maple-theme .prose code,
 html.maple-theme .timeline-code-block {
   background: rgba(37, 99, 235, .08);

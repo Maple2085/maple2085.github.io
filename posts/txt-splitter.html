@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="maple-theme">
+<head>
+  <meta charset="UTF-8" />
+  <title>文本分割工具介绍 — Maple2085</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Txt Splitter 文本分割工具介绍，支持按份数、大小和规则拆分大文本。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.imsyy.top/gh/imsyy/file/font/HarmonyOS_Sans/regular.min.css" />
+  <style>
+    :root{
+      --cream:#f7f5f0;--blue-0:#e8f2ff;--blue-1:#c8deff;--blue-2:#93bcff;--blue-3:#5b9bff;--blue-4:#2563eb;
+      --frost:rgba(245,248,255,.72);--frost2:rgba(255,255,255,.55);--border:rgba(180,210,255,.45);
+      --text-1:#0f1623;--text-2:#3a4a6b;--text-3:#7a8fb5;--shadow-sm:0 2px 12px rgba(50,100,200,.08);
+      --shadow-md:0 8px 40px rgba(50,100,200,.13);--radius:24px;--font-d:'Syne','HarmonyOS Sans',sans-serif;--font-b:'HarmonyOS Sans',-apple-system,sans-serif;--font-m:'JetBrains Mono',monospace;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:var(--font-b);background:var(--cream);color:var(--text-1);min-height:100vh;overflow-x:hidden}
+    .bg{position:fixed;inset:0;z-index:0;background:var(--cream);overflow:hidden}
+    .orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5}.o1{width:700px;height:700px;background:radial-gradient(circle,#bbd4ff 0%,transparent 70%);top:-170px;right:-110px}.o2{width:540px;height:540px;background:radial-gradient(circle,#cce2ff 0%,transparent 70%);bottom:-110px;left:-90px}
+    .bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(140,185,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(140,185,255,.06) 1px,transparent 1px);background-size:64px 64px}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px);filter:blur(6px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+    .page{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:52px 24px 80px}.a{opacity:0;animation:fadeUp .7s cubic-bezier(.22,1,.36,1) forwards}.a1{animation-delay:.05s}.a2{animation-delay:.16s}
+    .back{display:inline-flex;align-items:center;gap:8px;margin-bottom:30px;padding:11px 22px;background:var(--frost);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:50px;color:var(--text-2);text-decoration:none;font-size:14px;font-weight:600;box-shadow:var(--shadow-sm);transition:transform .3s,background .3s,box-shadow .3s}.back:hover{transform:translateX(-5px);background:white;box-shadow:var(--shadow-md);color:var(--blue-4)}
+    article{background:var(--frost);backdrop-filter:blur(24px);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-md);padding:52px}.article-header{padding-bottom:32px;margin-bottom:34px;border-bottom:1px solid var(--border)}
+    .eyebrow{font-size:11px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue-3);margin-bottom:12px}
+    h1{font-family:var(--font-d);font-size:clamp(36px,6vw,58px);font-weight:800;letter-spacing:-2px;line-height:1.05;background:linear-gradient(140deg,var(--text-1) 25%,var(--blue-4));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px}
+    .meta{display:flex;gap:9px;flex-wrap:wrap;color:var(--text-3);font-size:13px}.tag{padding:4px 12px;border-radius:50px;background:rgba(37,99,235,.1);border:1px solid var(--border);color:var(--blue-4);font-weight:700}
+    .prose{font-size:16px;line-height:1.82;color:var(--text-2)}.prose p,.prose ul,.prose ol{margin-bottom:1.4em}.prose ul,.prose ol{padding-left:22px}.prose li{margin-bottom:.55em}.prose h2{font-family:var(--font-d);font-size:27px;margin:1.7em 0 .75em;letter-spacing:-.5px;color:var(--text-1)}
+    .prose code{font-family:var(--font-m);font-size:.92em;background:rgba(37,99,235,.08);color:var(--blue-4);padding:2px 6px;border-radius:7px}.prose a{color:var(--blue-4);font-weight:700;text-decoration:none;border-bottom:1px solid rgba(37,99,235,.25)}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:50px;text-decoration:none;font-size:14px;font-weight:700;background:var(--blue-4);color:white;box-shadow:0 4px 20px rgba(37,99,235,.3);transition:transform .3s,background .3s,box-shadow .3s}.btn.secondary{background:var(--frost2);color:var(--text-2);border:1px solid var(--border);box-shadow:none}.btn:hover{transform:translateY(-3px);background:var(--blue-3);box-shadow:var(--shadow-md)}.btn.secondary:hover{background:white;color:var(--blue-4)}
+    @media(max-width:640px){article{padding:30px 20px}h1{letter-spacing:-1px}.links{display:grid}.btn{justify-content:center}}
+  </style>
+  <link rel="stylesheet" href="../assets/maple-theme.css?v=20260516-contrast" />
+</head>
+<body>
+  <div class="bg"><div class="orb o1"></div><div class="orb o2"></div><div class="bg-grid"></div></div>
+  <main class="page">
+    <a href="../posts.html" class="back a a1"><i class="fa-solid fa-arrow-left"></i> 返回文章列表</a>
+    <article class="a a2">
+      <header class="article-header">
+        <div class="eyebrow">Tool</div>
+        <h1>文本分割工具介绍</h1>
+        <div class="meta">
+          <span><i class="fa-regular fa-calendar"></i> 2025-03-15</span>
+          <span class="tag">工具</span>
+          <span class="tag">开源</span>
+        </div>
+      </header>
+      <div class="prose">
+        <p><strong>Txt Splitter</strong> 是一个纯前端文本分割工具，用来把长文本、大文件或需要分段阅读的内容拆成更容易处理的小片段。它适合小说、日志、备忘录、导入限制较严格的阅读设备和其他需要分块的场景。</p>
+        <h2>能做什么</h2>
+        <ul>
+          <li>按份数拆分：输入想要的份数，工具自动计算每段大小。</li>
+          <li>按大小拆分：控制每个片段的大致体积，适合有文件大小限制的设备。</li>
+          <li>按章节或规则拆分：尽量保留阅读结构，减少把句子硬切开的情况。</li>
+          <li>本地处理：文本在浏览器中完成处理，适合处理不想上传的内容。</li>
+        </ul>
+        <h2>使用方式</h2>
+        <ol>
+          <li>打开在线工具页面。</li>
+          <li>选择或粘贴需要分割的文本。</li>
+          <li>选择分割方式，设置份数、大小或规则。</li>
+          <li>预览结果，确认后下载分割后的文本。</li>
+        </ol>
+        <h2>近期维护</h2>
+        <p>当前仓库已处理移动端文件读取失败导致进度卡住的问题：读取片段改为带超时保护的方式，并在失败时恢复按钮和进度状态，避免停在“正在分析文件”。</p>
+        <div class="links">
+          <a class="btn" href="https://maple2085.saop.cc/txt-splitter/" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-rocket"></i> 立即使用</a>
+          <a class="btn secondary" href="https://txt-splitter.vercel.app/" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-globe"></i> 备用入口</a>
+          <a class="btn secondary" href="https://github.com/Maple2085/txt-splitter" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub</a>
+        </div>
+      </div>
+    </article>
+  </main>
+  <script src="../assets/maple-theme.js"></script>
+</body>
+</html>

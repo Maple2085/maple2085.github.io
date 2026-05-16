@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="maple-theme">
+<head>
+  <meta charset="UTF-8" />
+  <title>Txt Splitter 文本分割器 — Maple2085</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Txt Splitter 文本分割器项目页，纯前端拆分长文本与文本文件。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.imsyy.top/gh/imsyy/file/font/HarmonyOS_Sans/regular.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root{--cream:#f7f5f0;--blue-0:#e8f2ff;--blue-1:#c8deff;--blue-2:#93bcff;--blue-3:#5b9bff;--blue-4:#2563eb;--frost:rgba(245,248,255,.72);--frost2:rgba(255,255,255,.55);--border:rgba(180,210,255,.45);--text-1:#0f1623;--text-2:#3a4a6b;--text-3:#7a8fb5;--shadow-sm:0 2px 12px rgba(50,100,200,.08);--shadow-md:0 8px 40px rgba(50,100,200,.13);--shadow-lg:0 24px 80px rgba(50,100,200,.20);--radius:24px;--font-d:'Syne','HarmonyOS Sans',sans-serif;--font-b:'HarmonyOS Sans',-apple-system,sans-serif;--font-m:'JetBrains Mono',monospace}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:var(--font-b);background:var(--cream);color:var(--text-1);min-height:100vh;overflow-x:hidden;cursor:none;-webkit-user-select:none;user-select:none}*,*::before,*::after{cursor:none!important;-webkit-user-select:inherit;user-select:inherit}::selection{background:transparent}
+    #cur{position:fixed;width:10px;height:10px;background:var(--blue-4);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;mix-blend-mode:multiply}#cur-r{position:fixed;width:34px;height:34px;border:1.5px solid rgba(37,99,235,.35);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .35s cubic-bezier(.23,1,.32,1),height .35s cubic-bezier(.23,1,.32,1)}body:has(a:hover,.glass:hover) #cur{width:18px;height:18px;background:var(--blue-3)}body:has(a:hover,.glass:hover) #cur-r{width:52px;height:52px;border-color:rgba(91,155,255,.45)}@media(hover:none),(pointer:coarse){#cur,#cur-r{display:none}}
+    .bg{position:fixed;inset:0;z-index:0;background:var(--cream);overflow:hidden}.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;will-change:transform}.o1{width:720px;height:720px;background:radial-gradient(circle,#bbd5ff 0%,transparent 70%);top:-200px;left:-150px;animation:o1 20s ease-in-out infinite alternate}.o2{width:600px;height:600px;background:radial-gradient(circle,#cde3ff 0%,transparent 70%);right:-100px;bottom:-120px;animation:o2 26s ease-in-out infinite alternate}.o3{width:420px;height:420px;background:radial-gradient(circle,#deeeff 0%,transparent 70%);top:40%;left:50%;animation:o3 16s ease-in-out infinite alternate}.bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(140,185,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(140,185,255,.06) 1px,transparent 1px);background-size:64px 64px}@keyframes o1{to{transform:translate(90px,70px) scale(1.12)}}@keyframes o2{to{transform:translate(-70px,-90px) scale(1.18)}}@keyframes o3{to{transform:translate(-110px,50px) scale(.88)}}@keyframes fadeUp{from{opacity:0;transform:translateY(28px);filter:blur(8px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+    .page{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:52px 24px 80px}.a{opacity:0;animation:fadeUp .75s cubic-bezier(.22,1,.36,1) forwards}.a1{animation-delay:.05s}.a2{animation-delay:.18s}.top-nav{margin-bottom:30px}.back-btn,.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:50px;text-decoration:none;font-size:14px;font-weight:700;transition:transform .35s cubic-bezier(.34,1.56,.64,1),background .3s,box-shadow .3s,color .3s,border-color .3s}.back-btn{background:var(--frost);backdrop-filter:blur(16px);border:1px solid var(--border);color:var(--text-2);box-shadow:var(--shadow-sm)}.back-btn:hover{transform:translateX(-5px);background:white;color:var(--blue-4);box-shadow:var(--shadow-md)}
+    .glass{background:var(--frost);backdrop-filter:blur(24px);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-md);overflow:hidden;position:relative;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.23,1,.32,1),box-shadow .45s,border-color .3s}.glass::before{content:'';position:absolute;inset:0;background:radial-gradient(500px circle at var(--mx,50%) var(--my,50%),rgba(140,195,255,.2),transparent 55%);opacity:0;transition:opacity .3s;pointer-events:none}.glass::after{content:'';position:absolute;top:0;left:28px;right:28px;height:1.5px;background:linear-gradient(90deg,transparent,var(--blue-2),transparent);opacity:0;transition:opacity .3s}.glass:hover{box-shadow:var(--shadow-lg);border-color:rgba(140,195,255,.65)}.glass:hover::before,.glass:hover::after{opacity:1}.glass>*{position:relative;z-index:1}
+    .article{padding:52px}.article-header{display:grid;place-items:center;text-align:center;padding-bottom:36px;margin-bottom:36px;border-bottom:1px solid rgba(180,210,255,.45)}.project-icon{width:96px;height:96px;border-radius:28px;background:linear-gradient(135deg,var(--blue-1),var(--blue-0));display:grid;place-items:center;color:var(--blue-4);font-size:38px;border:1px solid var(--border);box-shadow:0 8px 28px rgba(37,99,235,.18);margin-bottom:22px;transition:transform .4s cubic-bezier(.34,1.56,.64,1)}.glass:hover .project-icon{transform:scale(1.12) rotate(-5deg)}.title{font-family:var(--font-d);font-size:clamp(38px,6vw,58px);font-weight:800;letter-spacing:-2px;line-height:1.05;background:linear-gradient(140deg,var(--text-1) 20%,var(--blue-4) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px}.meta{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;color:var(--text-3);font-size:13px}.tag{background:rgba(37,99,235,.1);border:1px solid var(--border);color:var(--blue-4);padding:4px 12px;border-radius:50px;font-weight:700}
+    .prose{font-size:16px;line-height:1.8;color:var(--text-2)}.prose p,.prose ol,.prose ul{margin-bottom:1.5em}.prose ol,.prose ul{padding-left:22px}.prose li{margin-bottom:.5em}.prose h2{font-family:var(--font-d);font-size:28px;margin:1.8em 0 .8em;letter-spacing:-.5px;color:var(--text-1)}.prose code{font-family:var(--font-m);font-size:.92em;background:rgba(37,99,235,.08);color:var(--blue-4);padding:2px 6px;border-radius:7px}.btn-group{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}.btn{background:var(--blue-4);color:white;border:1px solid transparent;box-shadow:0 4px 20px rgba(37,99,235,.3)}.btn.secondary{background:var(--frost2);color:var(--text-2);border-color:var(--border);box-shadow:none}.btn:hover{transform:translateY(-3px) scale(1.04);background:var(--blue-3);box-shadow:var(--shadow-md)}.btn.secondary:hover{background:white;color:var(--blue-4)}
+    .rip{position:absolute;border-radius:50%;background:rgba(91,155,255,.22);transform:scale(0);animation:rip .65s linear;pointer-events:none;z-index:2}@keyframes rip{to{transform:scale(4);opacity:0}}@media(max-width:640px){.article{padding:30px 20px}.title{letter-spacing:-1px}.btn{width:100%;justify-content:center}}
+  </style>
+  <link rel="stylesheet" href="../assets/maple-theme.css?v=20260516-contrast" />
+</head>
+<body>
+  <div id="cur"></div><div id="cur-r"></div>
+  <div class="bg"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div><div class="bg-grid"></div></div>
+  <main class="page">
+    <div class="top-nav a a1"><a href="../programs.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> 返回程序库</a></div>
+    <article class="article glass a a2">
+      <header class="article-header">
+        <div class="project-icon"><i class="fa-solid fa-scissors"></i></div>
+        <h1 class="title">Txt Splitter</h1>
+        <div class="meta"><span><i class="fa-regular fa-calendar"></i> 2025-08</span><span class="tag">Vue</span><span class="tag">文本工具</span></div>
+      </header>
+      <div class="prose">
+        <p>Txt Splitter 是一个轻量的纯前端大文本分割器，用来把长文本按份数、文件大小或规则拆成多个片段。处理过程发生在本地浏览器中，适合小说、日志、阅读设备导入和其他长文本整理场景。</p>
+        <h2>核心能力</h2>
+        <ul>
+          <li>按大小或份数分割，控制输出文件数量与体积。</li>
+          <li>尽量寻找换行边界，减少中文和句子被硬切开的情况。</li>
+          <li>支持移动端使用，并对文件读取失败做了超时和状态恢复保护。</li>
+          <li>开源，可自行部署，也可直接使用线上入口。</li>
+        </ul>
+        <h2>本地运行</h2>
+        <ol>
+          <li>克隆仓库：<code>git clone https://github.com/Maple2085/txt-splitter.git</code></li>
+          <li>进入目录并安装依赖：<code>npm install</code></li>
+          <li>启动开发服务：<code>npm run dev</code></li>
+        </ol>
+        <div class="btn-group">
+          <a class="btn" href="https://maple2085.saop.cc/txt-splitter/" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-rocket"></i> 立即使用</a>
+          <a class="btn secondary" href="https://txt-splitter.vercel.app/" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-globe"></i> 备用入口</a>
+          <a class="btn secondary" href="https://github.com/Maple2085/txt-splitter" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub</a>
+        </div>
+      </div>
+    </article>
+  </main>
+  <script>
+    const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');let rx=0,ry=0,cx=0,cy=0;
+    document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;cur.style.left=cx+'px';cur.style.top=cy+'px';const xp=(e.clientX/innerWidth-.5)*26,yp=(e.clientY/innerHeight-.5)*26;document.querySelector('.o1').style.transform=`translate(${xp*.55}px,${yp*.55}px)`;document.querySelector('.o2').style.transform=`translate(${-xp*.4}px,${-yp*.4}px)`;document.querySelector('.o3').style.transform=`translate(${xp*.7}px,${yp*.7}px)`});
+    (function loop(){rx+=(cx-rx)*.12;ry+=(cy-ry)*.12;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop)})();
+    document.querySelectorAll('.glass').forEach(card=>{card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;card.style.transform=`perspective(900px) rotateX(${((y-r.height/2)/r.height)*-6}deg) rotateY(${((x-r.width/2)/r.width)*6}deg) translateY(-5px)`;card.style.setProperty('--mx',(x/r.width*100)+'%');card.style.setProperty('--my',(y/r.height*100)+'%')});card.addEventListener('mouseleave',()=>{card.style.transform=''});card.addEventListener('mousedown',e=>{const r=card.getBoundingClientRect(),rip=document.createElement('span'),s=Math.max(r.width,r.height);rip.className='rip';rip.style.cssText=`width:${s}px;height:${s}px;left:${e.clientX-r.left-s/2}px;top:${e.clientY-r.top-s/2}px`;card.appendChild(rip);setTimeout(()=>rip.remove(),700)})});
+  </script>
+  <script src="../assets/maple-theme.js"></script>
+</body>
+</html>
