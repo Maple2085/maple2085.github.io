@@ -83,7 +83,7 @@
   }
 
   function observeEntrance() {
-    const targets = document.querySelectorAll('.stagger, .bento-card, .section-header, .code-container, .timeline-item, .video-container, .warning-container');
+    const targets = document.querySelectorAll('.bento-card, .section-header, .code-container, .timeline-item, .video-container, .warning-container');
     if (!targets.length) return;
     const obs = new IntersectionObserver(entries => {
       entries.forEach(entry => {

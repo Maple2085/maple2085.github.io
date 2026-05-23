@@ -144,11 +144,14 @@
           <h2 class="proj-title">小米笔记导出教程</h2>
           <p class="proj-desc">手把手教你把小米笔记的内容导出成通用格式，告别数据锁死，附视频教程和 Web 引导页，小白友好。</p>
           <div class="proj-links">
-            <a href="https://github.com/Maple2085/XiaomiNotes" target="_blank" rel="noopener noreferrer" class="plink plink-primary">
+            <a href="https://maple2085.saop.cc/XiaomiNotes" target="_blank" rel="noopener noreferrer" class="plink plink-primary">
               <i class="fa-solid fa-terminal"></i> Web 版教程
             </a>
             <a href="https://www.bilibili.com/video/BV1hacMztEqy/" target="_blank" rel="noopener noreferrer" class="plink">
               <i class="fa-brands fa-bilibili"></i> 哔哩哔哩
+            </a>
+            <a href="https://github.com/Maple2085/XiaomiNotes" target="_blank" rel="noopener noreferrer" class="plink">
+              <i class="fa-brands fa-github"></i> GitHub
             </a>
             <a href="https://raw.githubusercontent.com/Maple2085/XiaomiNotes/refs/heads/main/xiaomi-notes-exporter.js" target="_blank" rel="noopener noreferrer" class="plink">
               <i class="fa-solid fa-file-code"></i> 源码
@@ -224,15 +227,24 @@
 
     // ── Scroll-triggered stagger ──
     const obs=new IntersectionObserver(entries=>{
-      entries.forEach(en=>{
-        if(en.isIntersecting){
-          const delay=en.target.dataset.delay||0;
-          setTimeout(()=>{ en.target.classList.add('visible'); },+delay);
-          obs.unobserve(en.target);
-        }
+      entries.forEach(en=>{if(en.isIntersecting){setTimeout(()=>en.target.classList.add('visible'),+(en.target.dataset.delay||0));obs.unobserve(en.target);}});
+    },{threshold:.1});
+    function loadPrograms(){
+      document.querySelectorAll('.stagger').forEach(el=>{
+        obs.unobserve(el);
+        el.classList.remove('visible');
+        el.style.animation='none';
+        void el.offsetWidth;
+        el.style.animation='';
+        obs.observe(el);
       });
-    },{threshold:.12});
-    document.querySelectorAll('.stagger').forEach(el=>obs.observe(el));
+    }
+    if(document.readyState==='loading'){
+      document.addEventListener('DOMContentLoaded',loadPrograms);
+    }else{
+      loadPrograms();
+    }
+    window.addEventListener('pageshow',e=>{if(e.persisted)loadPrograms();});
   </script>
   <script src="assets/maple-theme.js"></script>
 </body>

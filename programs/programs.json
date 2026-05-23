@@ -1,13 +1,5 @@
 [
   {
-    "id": "example",
-    "title": "实例",
-    "tags": ["JavaScript", "示例"],
-    "date": "2026-05",
-    "summary": "",
-    "cover": "" 
-  },
-  {
     "id": "xiaominotes",
     "title": "Xiaomi Notes Exporter v3",
     "tags": ["JavaScript", "爬虫", "前端工具"],
